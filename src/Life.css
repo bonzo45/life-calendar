@@ -1,20 +1,38 @@
 .Life {
     display: flex;
     flex-direction: column;
+    align-items: center;
 
     width: 100%;
     height: 100%;
+}
+
+.LifeTitleWrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 .LifeTitle {
     margin: 40px;
 }
 
+.ArrowRight {
+    cursor: pointer;
+
+    width: 0;
+    height: 0;
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
+    border-left: 20px solid green;
+}
+
 .LifeCalendar {
     flex: 1 1 auto;
+    width: calc(100% - 800px);
     margin: 0 400px 40px 400px;
     border: solid white 3px;
-    /*border-radius: 20px;*/
+    overflow: hidden;
 
     display: flex;
     flex-direction: column;
@@ -41,8 +59,17 @@
     flex-direction: row;
 }
 
+.Year:last-child {
+    border-bottom: 2px solid #282c34;
+}
+
 .Month {
     flex: 1 1 auto;
     background-color: rgb(119, 126, 132);
+    border-right: 2px solid #282c34;
+    border-top: 2px solid #282c34;
 }
 
+.Month:first-child {
+    border-left: 2px solid #282c34;
+}
