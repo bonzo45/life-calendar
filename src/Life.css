@@ -35,7 +35,7 @@
     width: calc(100% - 800px);
     margin: 0 400px 40px 400px;
     border: solid white 3px;
-    overflow: hidden;
+    /*overflow: hidden;*/
 
     display: flex;
     flex-direction: column;
@@ -73,6 +73,18 @@
     border-top: 2px solid #282c34;
 }
 
+.Month.BirthMonth {
+    background-color: rgb(113, 179, 124);
+}
+
 .Month:first-child {
     border-left: 2px solid #282c34;
+}
+
+.Tutorial {
+    position: absolute;
+    right: 100%;
+    width: 200px;
+    font-size: 18px;
+    opacity: 0;
 }

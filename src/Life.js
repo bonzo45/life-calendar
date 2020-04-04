@@ -28,12 +28,11 @@ function Life() {
             const titleAnimationTo = {opacity: 1, duration: 1.25};
             timeline.from('.LifeTitleWrapper', titleAnimation, 'title');
             timeline.to('.LifeTitleWrapper', titleAnimationTo, 'title');
-            setState('calendar');
-        } else if (state === 'calendar') {
-            timeline.from('.LifeCalendar', {scale: 0.95, duration: 0.5}, '-=0.25');
-            timeline.to('.LifeCalendar', {opacity: 1, duration: 0.5}, '-=0.25');
             setState('birth');
         } else if (state === 'birth') {
+            timeline.from('.LifeCalendar', {scale: 0.95, duration: 0.5}, '-=0.25');
+            timeline.to('.LifeCalendar', {opacity: 1, duration: 0.5}, '-=0.25');
+
             timeline.addLabel('Birth');
             const birthDuration = 0.5;
             const birthStagger = 0.5;
@@ -47,17 +46,23 @@ function Life() {
             const birthAnimationTo = {opacity: 1, duration: birthDuration, stagger: birthStagger};
             timeline.from('.Month.BirthMonth', birthAnimation, 'Birth');
             timeline.to('.Month.BirthMonth', birthAnimationTo, 'Birth');
+
+            const birthTutorialAnimation = {x: '-40px', duration: birthDuration};
+            const birthTutorialAnimationTo = {opacity: 1, duration: birthDuration};
+            timeline.from('.Month.BirthMonth > .Tutorial', birthTutorialAnimation);
+            timeline.to('.Month.BirthMonth > .Tutorial', birthTutorialAnimationTo);
+
             setState('year1');
         } else if (state === 'year1') {
             timeline.addLabel('Year 1');
             const year1Duration = 0.5;
-            const year1Stagger = 0.5;
+            const year1Stagger = 0.25;
             const monthHeadingAnimation = {y: '-18px', duration: year1Duration, stagger: year1Stagger};
             const monthHeadingAnimationTo = {opacity: 1, duration: year1Duration, stagger: year1Stagger};
             timeline.from('.MonthHeading:not(.BirthMonth)', monthHeadingAnimation, 'Year 1');
             timeline.to('.MonthHeading:not(.BirthMonth)', monthHeadingAnimationTo, 'Year 1');
 
-            const year1Animation = {x: '-40px', duration: year1Duration, stagger: year1Stagger};
+            const year1Animation = {opacity: 0, x: '-40px', duration: year1Duration, stagger: year1Stagger};
             const year1AnimationTo = {opacity: 1, duration: year1Duration, stagger: year1Stagger};
             timeline.from('.Year1 > .Month:not(.BirthMonth)', year1Animation, 'Year 1');
             timeline.to('.Year1 > .Month:not(.BirthMonth)', year1AnimationTo, 'Year 1');
@@ -93,7 +98,7 @@ function Life() {
                     }
                 </div>
                 <div className="Year Year1">
-                    <div key={0} style={{zIndex: 12}} className="Month BirthMonth"></div>
+                    <div key={0} style={{zIndex: 12}} className="Month BirthMonth"><div className="Tutorial">You were born!</div></div>
                     { months.slice(1).map((month, i) => <div key={i + 1} style={{zIndex: 12 - (i + 1)}} className="Month"></div>) }
                 </div>
                 {
