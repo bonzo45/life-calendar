@@ -1,24 +1,37 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import { gsap } from 'gsap';
 import './Life.css';
 
 function Life() {
+
+    const states = ['start', 'title', 'calendar', 'birth'];
+    const [ state, setState ] = useState('start');
+
     const runAnimation = () => {
         const timeline = gsap.timeline();
-        const titleAnimation = {opacity: 0, y: '-100px', duration: 1.25};
-        timeline.from('.LifeTitleWrapper', titleAnimation);
-        timeline.from('.LifeCalendar', {opacity: 0, scale: 0.95, duration: 0.5}, '-=0.25');
-        timeline.addLabel('Year 1');
-        const year1Duration = 0.5;
-        const year1Stagger = 0.5;
-        const monthHeadingAnimation = {opacity: 0, y: '-18px', duration: year1Duration, stagger: year1Stagger};
-        const year1Animation = {opacity: 0, x: '-40px', duration: year1Duration, stagger: year1Stagger};
-        timeline.from('.MonthHeading', monthHeadingAnimation, 'Year 1');
-        timeline.from('.Year1 > .Month', year1Animation, 'Year 1');
-        const arrowAnimation = {opacity: 0, x: '-10px', duration: 0.5};
-        timeline.from('.ArrowRight', arrowAnimation);
+
+        if (state === 'start') {
+            const arrowAnimation = {opacity: 0, x: '-10px', duration: 0.5};
+            timeline.from('.ArrowRight', arrowAnimation);
+            setState('title');
+        } else if (state === 'title') {
+            const titleAnimation = {opacity: 0, y: '-100px', duration: 1.25};
+            timeline.from('.LifeTitleWrapper', titleAnimation);
+            setState('calendar');
+        } else if (state === 'calendar') {
+            timeline.from('.LifeCalendar', {opacity: 0, scale: 0.95, duration: 0.5}, '-=0.25');
+            setState('birth');
+        } else if (state === 'birth') {
+            timeline.addLabel('Year 1');
+            const year1Duration = 0.5;
+            const year1Stagger = 0.5;
+            const monthHeadingAnimation = {opacity: 0, y: '-18px', duration: year1Duration, stagger: year1Stagger};
+            const year1Animation = {opacity: 0, x: '-40px', duration: year1Duration, stagger: year1Stagger};
+            timeline.from('.MonthHeading', monthHeadingAnimation, 'Year 1');
+            timeline.from('.Year1 > .Month', year1Animation, 'Year 1');
+        }
     };
-    useEffect(runAnimation);
+    useEffect(runAnimation, []);
 
     const months = ['Feb', 'Mar', 'Apr', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan'];
     const numYears = 90;
@@ -30,13 +43,13 @@ function Life() {
 
     return (
         <div className="Life">
+            <div className="ArrowRight"
+                 onClick={
+                     () => runAnimation()
+                 }
+            />
             <div className="LifeTitleWrapper">
                 <h1 className="LifeTitle">Your Life</h1>
-                <div className="ArrowRight"
-                     onClick={
-                         () => runAnimation()
-                     }
-                />
             </div>
             <div className="LifeCalendar">
                 <div className="MonthHeadings">
