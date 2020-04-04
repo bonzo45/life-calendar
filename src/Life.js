@@ -66,6 +66,22 @@ function Life() {
             const year1AnimationTo = {opacity: 1, duration: year1Duration, stagger: year1Stagger};
             timeline.from('.Year1 > .Month:not(.BirthMonth)', year1Animation, 'Year 1');
             timeline.to('.Year1 > .Month:not(.BirthMonth)', year1AnimationTo, 'Year 1');
+
+            setState('restoflife');
+        } else if (state === 'restoflife') {
+            timeline.addLabel('Rest of Life');
+            const restOfLifeDuration = 0.25;
+            const restOfLifeStagger = 0.005;
+            const restOfLifeAnimation = {opacity: 0, x: '-40px', duration: restOfLifeDuration, stagger: restOfLifeStagger};
+            const restOfLifeAnimationTo = {opacity: 1, duration: restOfLifeDuration, stagger: restOfLifeStagger};
+            timeline.from('.Year:not(.Year1) > .Month', restOfLifeAnimation, 'Year 1');
+            timeline.to('.Year:not(.Year1) > .Month', restOfLifeAnimationTo, 'Year 1');
+
+            const ninetyDuration = 0.5;
+            const ninetyTutorialAnimation = {x: '40px', duration: ninetyDuration};
+            const ninetyTutorialAnimationTo = {opacity: 1, duration: ninetyDuration};
+            timeline.from('.Month.Ninety > .Tutorial', ninetyTutorialAnimation);
+            timeline.to('.Month.Ninety > .Tutorial', ninetyTutorialAnimationTo);
         }
     };
 
@@ -98,14 +114,20 @@ function Life() {
                     }
                 </div>
                 <div className="Year Year1">
-                    <div key={0} style={{zIndex: 12}} className="Month BirthMonth"><div className="Tutorial">You were born!</div></div>
+                    <div key={0} style={{zIndex: 12}} className="Month BirthMonth">
+                        <div className="Tutorial">You were born!</div>
+                    </div>
                     { months.slice(1).map((month, i) => <div key={i + 1} style={{zIndex: 12 - (i + 1)}} className="Month"></div>) }
                 </div>
                 {
                     years.map((year, y) => {
                         return (
                             <div className="Year">
-                                { months.map((month, i) => <div key={i} style={{visibility: 'hidden', zIndex: 12 - i}} className="Month"></div>) }
+                                { months.map((month, m) =>
+                                    <div key={m} style={{zIndex: 12 - m}} className={`Month ${(y === 88 && m === 11) ? 'Ninety' : ''}`}>
+                                        {(y === 88 && m === 11) ? <div className="Tutorial Right">You are 90!</div> : null}
+                                    </div>
+                                )}
                             </div>
                         );
                     })

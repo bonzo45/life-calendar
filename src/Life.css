@@ -67,13 +67,14 @@
 }
 
 .Month {
+    position: relative;
     flex: 1 1 auto;
     background-color: rgb(119, 126, 132);
     border-right: 2px solid #282c34;
     border-top: 2px solid #282c34;
 }
 
-.Month.BirthMonth {
+.Month.BirthMonth, .Month.Ninety {
     background-color: rgb(113, 179, 124);
 }
 
@@ -87,4 +88,8 @@
     width: 200px;
     font-size: 18px;
     opacity: 0;
+}
+
+.Tutorial.Right {
+    left: 100%;
 }
