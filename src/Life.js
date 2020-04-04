@@ -4,7 +4,7 @@ import './Life.css';
 
 function Life() {
 
-    const states = ['start', 'title', 'calendar', 'birth'];
+    // const states = ['start', 'title', 'calendar', 'birth'];
     const [ state, setState ] = useState('start');
 
     const runAnimation = () => {
@@ -22,18 +22,27 @@ function Life() {
             timeline.from('.LifeCalendar', {opacity: 0, scale: 0.95, duration: 0.5}, '-=0.25');
             setState('birth');
         } else if (state === 'birth') {
+            timeline.addLabel('Birth');
+            const birthDuration = 0.5;
+            const birthStagger = 0.5;
+            const monthHeadingAnimation = {opacity: 0, y: '-18px', duration: birthDuration, stagger: birthStagger};
+            const birthAnimation = {opacity: 0, x: '-40px', duration: birthDuration, stagger: birthStagger};
+            timeline.from('.MonthHeading.BirthMonth', monthHeadingAnimation, 'Birth');
+            timeline.from('.Year1 > .Month.BirthMonth', birthAnimation, 'Birth');
+            setState('year1');
+        } else if (state === 'year1') {
             timeline.addLabel('Year 1');
             const year1Duration = 0.5;
             const year1Stagger = 0.5;
             const monthHeadingAnimation = {opacity: 0, y: '-18px', duration: year1Duration, stagger: year1Stagger};
             const year1Animation = {opacity: 0, x: '-40px', duration: year1Duration, stagger: year1Stagger};
-            timeline.from('.MonthHeading', monthHeadingAnimation, 'Year 1');
-            timeline.from('.Year1 > .Month', year1Animation, 'Year 1');
+            timeline.from('.MonthHeading:not(.BirthMonth)', monthHeadingAnimation, 'Year 1');
+            timeline.from('.Year1 > .Month:not(.BirthMonth)', year1Animation, 'Year 1');
         }
     };
     useEffect(runAnimation, []);
 
-    const months = ['Feb', 'Mar', 'Apr', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan'];
+    const months = ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan'];
     const numYears = 90;
     const numYearsHack = numYears - 1;
     const years = Array(numYearsHack);
@@ -53,12 +62,14 @@ function Life() {
             </div>
             <div className="LifeCalendar">
                 <div className="MonthHeadings">
+                    <div key={0} className="MonthHeading BirthMonth">{months[0]}</div>
                     {
-                        months.map((month, i) => <div key={i} className="MonthHeading">{month}</div>)
+                        months.slice(1).map((month, i) => <div key={i + 1} className="MonthHeading">{month}</div>)
                     }
                 </div>
                 <div className="Year Year1">
-                    { months.map((month, i) => <div key={i} style={{zIndex: 12 - i}} className="Month"></div>) }
+                    <div key={0} style={{zIndex: 12}} className="Month BirthMonth"></div>
+                    { months.slice(1).map((month, i) => <div key={i + 1} style={{zIndex: 12 - (i + 1)}} className="Month"></div>) }
                 </div>
                 {
                     years.map((year, y) => {
