@@ -7,39 +7,64 @@ function Life() {
     // const states = ['start', 'title', 'calendar', 'birth'];
     const [ state, setState ] = useState('start');
 
+    const prepareAnimation = () => {
+        const timeline = gsap.timeline();
+        timeline.to('.ArrowRight, .LifeTitleWrapper, .LifeCalendar, .MonthHeading.BirthMonth, .Month.BirthMonth, .MonthHeading:not(.BirthMonth), .Month:not(.BirthMonth)', {opacity: 0, duration: 0});
+    };
+
     const runAnimation = () => {
         const timeline = gsap.timeline();
 
         if (state === 'start') {
-            const arrowAnimation = {opacity: 0, x: '-10px', duration: 0.5};
-            timeline.from('.ArrowRight', arrowAnimation);
+            timeline.addLabel('start');
+            const arrowAnimation = {x: '-10px', duration: 0.5};
+            const arrowAnimationTo = {opacity: 1, duration: 0.5};
+            timeline.from('.ArrowRight', arrowAnimation, 'start');
+            timeline.to('.ArrowRight', arrowAnimationTo, 'start');
             setState('title');
         } else if (state === 'title') {
-            const titleAnimation = {opacity: 0, y: '-100px', duration: 1.25};
-            timeline.from('.LifeTitleWrapper', titleAnimation);
+            timeline.addLabel('title');
+            const titleAnimation = {y: '-100px', duration: 1.25};
+            const titleAnimationTo = {opacity: 1, duration: 1.25};
+            timeline.from('.LifeTitleWrapper', titleAnimation, 'title');
+            timeline.to('.LifeTitleWrapper', titleAnimationTo, 'title');
             setState('calendar');
         } else if (state === 'calendar') {
-            timeline.from('.LifeCalendar', {opacity: 0, scale: 0.95, duration: 0.5}, '-=0.25');
+            timeline.from('.LifeCalendar', {scale: 0.95, duration: 0.5}, '-=0.25');
+            timeline.to('.LifeCalendar', {opacity: 1, duration: 0.5}, '-=0.25');
             setState('birth');
         } else if (state === 'birth') {
             timeline.addLabel('Birth');
             const birthDuration = 0.5;
             const birthStagger = 0.5;
-            const monthHeadingAnimation = {opacity: 0, y: '-18px', duration: birthDuration, stagger: birthStagger};
-            const birthAnimation = {opacity: 0, x: '-40px', duration: birthDuration, stagger: birthStagger};
+
+            const monthHeadingAnimation = {y: '-18px', duration: birthDuration, stagger: birthStagger};
+            const monthHeadingAnimationTo = {opacity: 1, duration: birthDuration, stagger: birthStagger};
             timeline.from('.MonthHeading.BirthMonth', monthHeadingAnimation, 'Birth');
-            timeline.from('.Year1 > .Month.BirthMonth', birthAnimation, 'Birth');
+            timeline.to('.MonthHeading.BirthMonth', monthHeadingAnimationTo, 'Birth');
+
+            const birthAnimation = {x: '-40px', duration: birthDuration, stagger: birthStagger};
+            const birthAnimationTo = {opacity: 1, duration: birthDuration, stagger: birthStagger};
+            timeline.from('.Month.BirthMonth', birthAnimation, 'Birth');
+            timeline.to('.Month.BirthMonth', birthAnimationTo, 'Birth');
             setState('year1');
         } else if (state === 'year1') {
             timeline.addLabel('Year 1');
             const year1Duration = 0.5;
             const year1Stagger = 0.5;
-            const monthHeadingAnimation = {opacity: 0, y: '-18px', duration: year1Duration, stagger: year1Stagger};
-            const year1Animation = {opacity: 0, x: '-40px', duration: year1Duration, stagger: year1Stagger};
+            const monthHeadingAnimation = {y: '-18px', duration: year1Duration, stagger: year1Stagger};
+            const monthHeadingAnimationTo = {opacity: 1, duration: year1Duration, stagger: year1Stagger};
             timeline.from('.MonthHeading:not(.BirthMonth)', monthHeadingAnimation, 'Year 1');
+            timeline.to('.MonthHeading:not(.BirthMonth)', monthHeadingAnimationTo, 'Year 1');
+
+            const year1Animation = {x: '-40px', duration: year1Duration, stagger: year1Stagger};
+            const year1AnimationTo = {opacity: 1, duration: year1Duration, stagger: year1Stagger};
             timeline.from('.Year1 > .Month:not(.BirthMonth)', year1Animation, 'Year 1');
+            timeline.to('.Year1 > .Month:not(.BirthMonth)', year1AnimationTo, 'Year 1');
         }
     };
+
+    useEffect(prepareAnimation, []);
     useEffect(runAnimation, []);
 
     const months = ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan'];
