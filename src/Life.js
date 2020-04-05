@@ -7,7 +7,7 @@ function Life() {
 
     const prepareAnimation = () => {
         const timeline = gsap.timeline();
-        timeline.to('.LifeCalendar, .MonthHeading.BirthMonth, .Month.BirthMonth, .MonthHeading:not(.BirthMonth), .Month:not(.BirthMonth)', {opacity: 0, duration: 0});
+        timeline.to('.MonthHeading.BirthMonth, .Month.BirthMonth, .MonthHeading:not(.BirthMonth), .Month:not(.BirthMonth)', {opacity: 0, duration: 0});
     };
 
     const fadeIn = duration => ({autoAlpha: 1, duration});
@@ -35,11 +35,16 @@ function Life() {
                 pulseTimeline.to('.Continue', {scale: 1 - pulseSize, duration: pulseDuration, ease: "sine.inOut"});
                 pulseTimeline.to('.Continue', {scale: 1 + pulseSize, duration: pulseDuration, ease: "sine.inOut"});
                 timeline.add(pulseTimeline);
+
+                timeline.seek(10);
                 break;
 
             case 1:
-                timeline.from('.LifeCalendar', {scale: 0.95, duration: 0.5}, '-=0.25');
-                timeline.to('.LifeCalendar', {opacity: 1, duration: 0.5}, '-=0.25');
+                timeline.addLabel('calendar');
+
+                const calendarDuration = 1;
+                timeline.from('.LifeCalendar', {scale: 0.95, duration: calendarDuration}, 'calendar');
+                timeline.to('.LifeCalendar', fadeIn(calendarDuration), 'calendar');
 
                 timeline.addLabel('Birth');
                 const birthDuration = 0.5;

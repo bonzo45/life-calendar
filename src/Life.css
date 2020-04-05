@@ -37,11 +37,13 @@
 }
 
 .LifeCalendar {
+    visibility: hidden;
+
     flex: 1 1 auto;
     width: calc(100% - 800px);
     margin: 0 400px 40px 400px;
-    border: solid white 3px;
-    /*overflow: hidden;*/
+    border: solid white 2px;
+    border-radius: 5px;
 
     display: flex;
     flex-direction: column;
@@ -54,11 +56,12 @@
     flex-direction: row;
 
     font-size: 18px;
-    padding: 4px 0;
 }
 
 .MonthHeading {
     flex: 1 1 auto;
+    /*border-bottom: solid white 2px;*/
+    padding: 4px 0;
 }
 
 .Year {
