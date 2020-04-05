@@ -107,11 +107,11 @@ function Life() {
             </div>
             <div className="LifeCalendar">
                 <Months/>
-                <Year/>
+                <Year y={1}/>
                 {
                     years.map((year, y) => {
                         return (
-                            <AnotherYear y={y}/>
+                            <Year y={y+2}/>
                         );
                     })
                 }
@@ -132,25 +132,15 @@ function Months() {
     );
 }
 
-function Year() {
+function Year({y}) {
     const months = ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan'];
+    const yearClass = `Year Year${y}`;
     return (
-        <div className="Year Year1">
-            <div key={0} style={{zIndex: 12}} className="Month BirthMonth">
-                <div className="Tutorial">You were born!</div>
-            </div>
-            { months.slice(1).map((month, i) => <div key={i + 1} style={{zIndex: 12 - (i + 1)}} className="Month"></div>) }
-        </div>
-    );
-}
-
-function AnotherYear({y}) {
-    const months = ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan'];
-    return (
-        <div className="Year">
+        <div className={yearClass}>
             { months.map((month, m) =>
-                <div key={m} style={{zIndex: 12 - m}} className={`Month ${(y === 88 && m === 11) ? 'Ninety' : ''}`}>
-                    {(y === 88 && m === 11) ? <div className="Tutorial Right">You are 90!</div> : null}
+                <div key={m} style={{zIndex: 12 - m}} className={`Month ${(y === 1 && m === 0) ? 'BirthMonth' : ''} ${(y === 90 && m === 11) ? 'Ninety' : ''}`}>
+                    {(y === 1 && m === 0) ? <div className="Tutorial">You were born!</div> : null}
+                    {(y === 90 && m === 11) ? <div className="Tutorial Right">You are 90!</div> : null}
                 </div>
             )}
         </div>
