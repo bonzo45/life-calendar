@@ -50,9 +50,9 @@ function Life() {
                 const birthDuration = 0.5;
                 const birthStagger = 0.5;
                 timeline.from('.MonthHeading.BirthMonth', {y: '-18px', duration: birthDuration, stagger: birthStagger}, 'birth');
-                timeline.to('.MonthHeading.BirthMonth', fadeIn(birthDuration, {stagger: birthStagger}), 'birth');
+                timeline.to('.MonthHeading.BirthMonth', fadeIn(birthDuration), 'birth');
                 timeline.from('.Month.BirthMonth', {x: '-40px', duration: birthDuration, stagger: birthStagger}, 'birth');
-                timeline.to('.Month.BirthMonth', fadeIn(birthDuration, {stagger: birthStagger}), 'birth');
+                timeline.to('.Month.BirthMonth', fadeIn(birthDuration), 'birth');
                 timeline.from('.Month.BirthMonth > .Tutorial', {x: '-40px', duration: birthDuration});
                 timeline.to('.Month.BirthMonth > .Tutorial', fadeIn(birthDuration));
                 break;
@@ -71,16 +71,12 @@ function Life() {
                 timeline.addLabel('Rest of Life');
                 const restOfLifeDuration = 0.25;
                 const restOfLifeStagger = 0.005;
-                const restOfLifeAnimation = {opacity: 0, x: '-40px', duration: restOfLifeDuration, stagger: restOfLifeStagger};
-                const restOfLifeAnimationTo = {opacity: 1, duration: restOfLifeDuration, stagger: restOfLifeStagger};
-                timeline.from('.Year:not(.Year1) > .Month', restOfLifeAnimation, 'Year 1');
-                timeline.to('.Year:not(.Year1) > .Month', restOfLifeAnimationTo, 'Year 1');
+                timeline.from('.Year:not(.Year1) > .Month', {x: '-40px', duration: restOfLifeDuration, stagger: restOfLifeStagger}, 'Year 1');
+                timeline.to('.Year:not(.Year1) > .Month', fadeIn(restOfLifeDuration, {stagger: restOfLifeStagger}), 'Year 1');
 
                 const ninetyDuration = 0.5;
-                const ninetyTutorialAnimation = {x: '40px', duration: ninetyDuration};
-                const ninetyTutorialAnimationTo = {opacity: 1, duration: ninetyDuration};
-                timeline.from('.Month.Ninety > .Tutorial', ninetyTutorialAnimation);
-                timeline.to('.Month.Ninety > .Tutorial', ninetyTutorialAnimationTo);
+                timeline.from('.Month.Ninety > .Tutorial', {x: '40px', duration: ninetyDuration});
+                timeline.to('.Month.Ninety > .Tutorial', fadeIn(ninetyDuration));
                 break;
         }
         setState(state + 1);
