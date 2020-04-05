@@ -86,9 +86,8 @@ function Life() {
     useEffect(runAnimation, []);
 
     const numYears = 90;
-    const numYearsHack = numYears - 1;
-    const years = Array(numYearsHack);
-    for (let y = 0; y < numYearsHack; y++) {
+    const years = Array(numYears);
+    for (let y = 0; y < numYears; y++) {
         years[y] = y+1;
     }
 
@@ -107,11 +106,10 @@ function Life() {
             </div>
             <div className="LifeCalendar">
                 <Months/>
-                <Year y={1}/>
                 {
                     years.map((year, y) => {
                         return (
-                            <Year y={y+2}/>
+                            <Year y={y+1}/>
                         );
                     })
                 }
