@@ -3,13 +3,11 @@ import { gsap } from 'gsap';
 import './Life.css';
 
 function Life() {
-
-    // const states = ['start', 'title', 'calendar', 'birth'];
     const [ state, setState ] = useState('start');
 
     const prepareAnimation = () => {
         const timeline = gsap.timeline();
-        timeline.to('.ArrowRight, .LifeTitleWrapper, .LifeCalendar, .MonthHeading.BirthMonth, .Month.BirthMonth, .MonthHeading:not(.BirthMonth), .Month:not(.BirthMonth)', {opacity: 0, duration: 0});
+        timeline.to('.LifeTitleWrapper, .LifeCalendar, .MonthHeading.BirthMonth, .Month.BirthMonth, .MonthHeading:not(.BirthMonth), .Month:not(.BirthMonth)', {opacity: 0, duration: 0});
     };
 
     const runAnimation = () => {
@@ -17,10 +15,10 @@ function Life() {
 
         if (state === 'start') {
             timeline.addLabel('start');
-            const arrowAnimation = {x: '-10px', duration: 0.5};
-            const arrowAnimationTo = {opacity: 1, duration: 0.5};
-            timeline.from('.ArrowRight', arrowAnimation, 'start');
-            timeline.to('.ArrowRight', arrowAnimationTo, 'start');
+            const arrowAnimation = {y: '-300px', duration: 0.5};
+            const arrowAnimationTo = {autoAlpha: 1, duration: 0.5};
+            timeline.from('.Continue', arrowAnimation, 'start');
+            timeline.to('.Continue', arrowAnimationTo, 'start');
             setState('title');
         } else if (state === 'title') {
             timeline.addLabel('title');
@@ -98,11 +96,13 @@ function Life() {
 
     return (
         <div className="Life">
-            <div className="ArrowRight"
+            <div className="Continue"
                  onClick={
                      () => runAnimation()
                  }
-            />
+            >
+                <div>Continue</div>
+            </div>
             <div className="LifeTitleWrapper">
                 <h1 className="LifeTitle">Your Life</h1>
             </div>
