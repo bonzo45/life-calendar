@@ -85,7 +85,6 @@ function Life() {
     useEffect(prepareAnimation, []);
     useEffect(runAnimation, []);
 
-    const months = ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan'];
     const numYears = 90;
     const numYearsHack = numYears - 1;
     const years = Array(numYearsHack);
@@ -107,34 +106,55 @@ function Life() {
                 </div>
             </div>
             <div className="LifeCalendar">
-                <div className="MonthHeadings">
-                    <div key={0} className="MonthHeading BirthMonth">{months[0]}</div>
-                    {
-                        months.slice(1).map((month, i) => <div key={i + 1} className="MonthHeading">{month}</div>)
-                    }
-                </div>
-                <div className="Year Year1">
-                    <div key={0} style={{zIndex: 12}} className="Month BirthMonth">
-                        <div className="Tutorial">You were born!</div>
-                    </div>
-                    { months.slice(1).map((month, i) => <div key={i + 1} style={{zIndex: 12 - (i + 1)}} className="Month"></div>) }
-                </div>
+                <Months/>
+                <Year/>
                 {
                     years.map((year, y) => {
                         return (
-                            <div className="Year">
-                                { months.map((month, m) =>
-                                    <div key={m} style={{zIndex: 12 - m}} className={`Month ${(y === 88 && m === 11) ? 'Ninety' : ''}`}>
-                                        {(y === 88 && m === 11) ? <div className="Tutorial Right">You are 90!</div> : null}
-                                    </div>
-                                )}
-                            </div>
+                            <AnotherYear y={y}/>
                         );
                     })
                 }
             </div>
         </div>
   );
+}
+
+function Months() {
+    const months = ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan'];
+    return (
+        <div className="MonthHeadings">
+            <div key={0} className="MonthHeading BirthMonth">{months[0]}</div>
+            {
+                months.slice(1).map((month, i) => <div key={i + 1} className="MonthHeading">{month}</div>)
+            }
+        </div>
+    );
+}
+
+function Year() {
+    const months = ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan'];
+    return (
+        <div className="Year Year1">
+            <div key={0} style={{zIndex: 12}} className="Month BirthMonth">
+                <div className="Tutorial">You were born!</div>
+            </div>
+            { months.slice(1).map((month, i) => <div key={i + 1} style={{zIndex: 12 - (i + 1)}} className="Month"></div>) }
+        </div>
+    );
+}
+
+function AnotherYear({y}) {
+    const months = ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan'];
+    return (
+        <div className="Year">
+            { months.map((month, m) =>
+                <div key={m} style={{zIndex: 12 - m}} className={`Month ${(y === 88 && m === 11) ? 'Ninety' : ''}`}>
+                    {(y === 88 && m === 11) ? <div className="Tutorial Right">You are 90!</div> : null}
+                </div>
+            )}
+        </div>
+    );
 }
 
 export default Life;
