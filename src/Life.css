@@ -14,30 +14,22 @@
 }
 
 .LifeTitle {
-    margin: 40px;
+    visibility: hidden;
+
+    margin: 40px 20px;
 }
 
 .Continue {
     visibility: hidden;
 
-    position: fixed;
-    top: 20px;
-    right: 20px;
     cursor: pointer;
     background-color: #5ca74e;
     box-sizing: border-box;
     border: inset;
 
-    padding: 20px;
-    width: 150px;
-    height: 150px;
+    width: 40px;
+    height: 40px;
     border-radius: 500px;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-
-    font-weight: 500;
 }
 
 .Continue:hover {

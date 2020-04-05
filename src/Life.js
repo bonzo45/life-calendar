@@ -7,7 +7,7 @@ function Life() {
 
     const prepareAnimation = () => {
         const timeline = gsap.timeline();
-        timeline.to('.LifeTitleWrapper, .LifeCalendar, .MonthHeading.BirthMonth, .Month.BirthMonth, .MonthHeading:not(.BirthMonth), .Month:not(.BirthMonth)', {opacity: 0, duration: 0});
+        timeline.to('.LifeCalendar, .MonthHeading.BirthMonth, .Month.BirthMonth, .MonthHeading:not(.BirthMonth), .Month:not(.BirthMonth)', {opacity: 0, duration: 0});
     };
 
     const fadeIn = duration => ({autoAlpha: 1, duration});
@@ -19,20 +19,25 @@ function Life() {
             default:
             case 0:
                 timeline.addLabel('start');
+
+                const titleDuration = 2;
+                timeline.from('.LifeTitle', {y: '-100px', duration: titleDuration}, 'start');
+                timeline.to('.LifeTitle', fadeIn(titleDuration), 'start');
+
                 const buttonDuration = 0.5;
-                timeline.from('.Continue', {y: '-300px', duration: buttonDuration}, 'start');
-                timeline.to('.Continue', fadeIn(buttonDuration), 'start');
+                timeline.from('.Continue', {scale: 0}, titleDuration);
+                timeline.to('.Continue', fadeIn(buttonDuration), titleDuration);
+
+                const pulseTimeline = gsap.timeline({repeat: -1});
+                const pulseDuration = 0.5;
+                pulseTimeline.to('.Continue', {scale: 0.95, duration: pulseDuration, ease: "sine.inOut"});
+                pulseTimeline.to('.Continue', {scale: 1, duration: pulseDuration, ease: "sine.inOut"});
+                pulseTimeline.to('.Continue', {scale: 1.05, duration: pulseDuration, ease: "sine.inOut"});
+                pulseTimeline.to('.Continue', {scale: 1, duration: pulseDuration, ease: "sine.inOut"});
+                timeline.add(pulseTimeline);
                 break;
 
             case 1:
-                timeline.addLabel('title');
-                const titleAnimation = {y: '-100px', duration: 1.25};
-                const titleAnimationTo = {opacity: 1, duration: 1.25};
-                timeline.from('.LifeTitleWrapper', titleAnimation, 'title');
-                timeline.to('.LifeTitleWrapper', titleAnimationTo, 'title');
-                break;
-
-            case 2:
                 timeline.from('.LifeCalendar', {scale: 0.95, duration: 0.5}, '-=0.25');
                 timeline.to('.LifeCalendar', {opacity: 1, duration: 0.5}, '-=0.25');
 
@@ -56,7 +61,7 @@ function Life() {
                 timeline.to('.Month.BirthMonth > .Tutorial', birthTutorialAnimationTo);
                 break;
 
-            case 3:
+            case 2:
                 timeline.addLabel('Year 1');
                 const year1Duration = 0.5;
                 const year1Stagger = 0.25;
@@ -71,7 +76,7 @@ function Life() {
                 timeline.to('.Year1 > .Month:not(.BirthMonth)', year1AnimationTo, 'Year 1');
                 break;
 
-            case 4:
+            case 3:
                 timeline.addLabel('Rest of Life');
                 const restOfLifeDuration = 0.25;
                 const restOfLifeStagger = 0.005;
@@ -103,15 +108,16 @@ function Life() {
 
     return (
         <div className="Life">
-            <div className="Continue"
-                 onClick={
-                     () => runAnimation()
-                 }
-            >
-                <div>Continue</div>
-            </div>
             <div className="LifeTitleWrapper">
-                <h1 className="LifeTitle">Your Life</h1>
+                <h1 className="LifeTitle">
+                    Your Life
+                </h1>
+                <div className="Continue"
+                     onClick={
+                         () => runAnimation()
+                     }
+                >
+                </div>
             </div>
             <div className="LifeCalendar">
                 <div className="MonthHeadings">
