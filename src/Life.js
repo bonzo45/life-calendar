@@ -46,24 +46,15 @@ function Life() {
                 timeline.from('.LifeCalendar', {scale: 0.95, duration: calendarDuration}, 'calendar');
                 timeline.to('.LifeCalendar', fadeIn(calendarDuration), 'calendar');
 
-                timeline.addLabel('Birth');
+                timeline.addLabel('birth');
                 const birthDuration = 0.5;
                 const birthStagger = 0.5;
-
-                const monthHeadingAnimation = {y: '-18px', duration: birthDuration, stagger: birthStagger};
-                const monthHeadingAnimationTo = {opacity: 1, duration: birthDuration, stagger: birthStagger};
-                timeline.from('.MonthHeading.BirthMonth', monthHeadingAnimation, 'Birth');
-                timeline.to('.MonthHeading.BirthMonth', monthHeadingAnimationTo, 'Birth');
-
-                const birthAnimation = {x: '-40px', duration: birthDuration, stagger: birthStagger};
-                const birthAnimationTo = {opacity: 1, duration: birthDuration, stagger: birthStagger};
-                timeline.from('.Month.BirthMonth', birthAnimation, 'Birth');
-                timeline.to('.Month.BirthMonth', birthAnimationTo, 'Birth');
-
-                const birthTutorialAnimation = {x: '-40px', duration: birthDuration};
-                const birthTutorialAnimationTo = {opacity: 1, duration: birthDuration};
-                timeline.from('.Month.BirthMonth > .Tutorial', birthTutorialAnimation);
-                timeline.to('.Month.BirthMonth > .Tutorial', birthTutorialAnimationTo);
+                timeline.from('.MonthHeading.BirthMonth', {y: '-18px', duration: birthDuration, stagger: birthStagger}, 'birth');
+                timeline.to('.MonthHeading.BirthMonth', fadeIn(birthDuration), 'birth');
+                timeline.from('.Month.BirthMonth', {x: '-40px', duration: birthDuration, stagger: birthStagger}, 'birth');
+                timeline.to('.Month.BirthMonth', fadeIn(birthDuration), 'birth');
+                timeline.from('.Month.BirthMonth > .Tutorial', {x: '-40px', duration: birthDuration});
+                timeline.to('.Month.BirthMonth > .Tutorial', fadeIn(birthDuration));
                 break;
 
             case 2:
