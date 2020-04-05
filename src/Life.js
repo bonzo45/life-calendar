@@ -25,14 +25,15 @@ function Life() {
                 timeline.to('.LifeTitle', fadeIn(titleDuration), 'start');
 
                 const buttonDuration = 0.5;
+                const pulseSize = 0.025;
                 timeline.set('.Continue', {scale: 0});
-                timeline.to('.Continue', {scale: 1.05, buttonDuration}, titleDuration);
+                timeline.to('.Continue', {scale: 1 + pulseSize, buttonDuration}, titleDuration);
                 timeline.to('.Continue', fadeIn(buttonDuration), titleDuration);
 
                 const pulseTimeline = gsap.timeline({repeat: -1});
-                const pulseDuration = 0.5;
-                pulseTimeline.to('.Continue', {scale: 0.95, duration: pulseDuration, ease: "sine.inOut"});
-                pulseTimeline.to('.Continue', {scale: 1.05, duration: pulseDuration, ease: "sine.inOut"});
+                const pulseDuration = 1;
+                pulseTimeline.to('.Continue', {scale: 1 - pulseSize, duration: pulseDuration, ease: "sine.inOut"});
+                pulseTimeline.to('.Continue', {scale: 1 + pulseSize, duration: pulseDuration, ease: "sine.inOut"});
                 timeline.add(pulseTimeline);
                 break;
 
