@@ -10,7 +10,7 @@ function Life() {
         timeline.to('.MonthHeading.BirthMonth, .Month.BirthMonth, .MonthHeading:not(.BirthMonth), .Month:not(.BirthMonth)', {opacity: 0, duration: 0});
     };
 
-    const fadeIn = duration => ({autoAlpha: 1, duration});
+    const fadeIn = (duration, others) => ({autoAlpha: 1, duration, ...others});
 
     const runAnimation = () => {
         const timeline = gsap.timeline();
@@ -36,7 +36,7 @@ function Life() {
                 pulseTimeline.to('.Continue', {scale: 1 + pulseSize, duration: pulseDuration, ease: "sine.inOut"});
                 timeline.add(pulseTimeline);
 
-                timeline.seek(10);
+                // timeline.seek(10);
                 break;
 
             case 1:
@@ -50,26 +50,21 @@ function Life() {
                 const birthDuration = 0.5;
                 const birthStagger = 0.5;
                 timeline.from('.MonthHeading.BirthMonth', {y: '-18px', duration: birthDuration, stagger: birthStagger}, 'birth');
-                timeline.to('.MonthHeading.BirthMonth', fadeIn(birthDuration), 'birth');
+                timeline.to('.MonthHeading.BirthMonth', fadeIn(birthDuration, {stagger: birthStagger}), 'birth');
                 timeline.from('.Month.BirthMonth', {x: '-40px', duration: birthDuration, stagger: birthStagger}, 'birth');
-                timeline.to('.Month.BirthMonth', fadeIn(birthDuration), 'birth');
+                timeline.to('.Month.BirthMonth', fadeIn(birthDuration, {stagger: birthStagger}), 'birth');
                 timeline.from('.Month.BirthMonth > .Tutorial', {x: '-40px', duration: birthDuration});
                 timeline.to('.Month.BirthMonth > .Tutorial', fadeIn(birthDuration));
                 break;
 
             case 2:
-                timeline.addLabel('Year 1');
+                timeline.addLabel('year1');
                 const year1Duration = 0.5;
                 const year1Stagger = 0.25;
-                const yearHeadingAnimation = {y: '-18px', duration: year1Duration, stagger: year1Stagger};
-                const yearHeadingAnimationTo = {opacity: 1, duration: year1Duration, stagger: year1Stagger};
-                timeline.from('.MonthHeading:not(.BirthMonth)', yearHeadingAnimation, 'Year 1');
-                timeline.to('.MonthHeading:not(.BirthMonth)', yearHeadingAnimationTo, 'Year 1');
-
-                const year1Animation = {opacity: 0, x: '-40px', duration: year1Duration, stagger: year1Stagger};
-                const year1AnimationTo = {opacity: 1, duration: year1Duration, stagger: year1Stagger};
-                timeline.from('.Year1 > .Month:not(.BirthMonth)', year1Animation, 'Year 1');
-                timeline.to('.Year1 > .Month:not(.BirthMonth)', year1AnimationTo, 'Year 1');
+                timeline.from('.MonthHeading:not(.BirthMonth)', {y: '-18px', duration: year1Duration, stagger: year1Stagger}, 'year1');
+                timeline.to('.MonthHeading:not(.BirthMonth)', fadeIn(year1Duration, {stagger: year1Stagger}), 'year1');
+                timeline.from('.Year1 > .Month:not(.BirthMonth)', {x: '-40px', duration: year1Duration, stagger: year1Stagger}, 'year1');
+                timeline.to('.Year1 > .Month:not(.BirthMonth)', fadeIn(year1Duration, {stagger: year1Stagger}), 'year1');
                 break;
 
             case 3:
