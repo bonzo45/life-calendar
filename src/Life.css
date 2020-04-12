@@ -92,17 +92,20 @@
 
 .Tutorial {
     position: absolute;
-    right: 100%;
+    right: calc(100% + 10px);
     width: 200px;
     font-size: 18px;
     opacity: 0;
+    background-color: #282c34;
+    border: solid white 1px;
+    border-radius: 5px;
 }
 
 .Tutorial.Right {
-    left: 100%;
+    left: calc(100% + 10px);
 }
 
 .Tutorial.Below {
-    top: 100%;
+    top: calc(100% + 10px);
     left: 0;
 }
