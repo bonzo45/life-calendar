@@ -14,7 +14,7 @@ const tutorials = [
     {
         year: 1,
         month: 1,
-        tutorial: <div className='Tutorial'>You were born!</div>,
+        tutorial: <div key='tutorial-birth' className='Tutorial'>You were born!</div>,
         className: 'BirthMonth',
         animate: timeline => {
             timeline.addLabel('birth');
@@ -31,13 +31,13 @@ const tutorials = [
     {
         year: 1,
         month: 11,
-        tutorial: <div className='Tutorial'>Your first Christmas 🎄'</div>,
+        tutorial: <div key='tutorial-christmas' className='Tutorial'>Your first Christmas 🎄'</div>,
         className: 'Christmas',
     },
     {
         year: 90,
         month: 12,
-        tutorial: <div className='Tutorial Right'>You are 90!</div>,
+        tutorial: <div key='tutorial-ninety' className='Tutorial Right'>You are 90!</div>,
         className: 'Ninety',
         animate: timeline => {
             const ninetyDuration = 0.5;
@@ -60,7 +60,7 @@ function getMonthsBetween(tutorialA, tutorialB) {
         selectors.push(`.Year${year}.Month${month}`);
     };
 
-    while (currentYear < yearTo || currentYear === yearTo && currentMonth <= monthTo) {
+    while ((currentYear < yearTo) || ((currentYear === yearTo) && (currentMonth <= monthTo))) {
         addToResult(currentYear, currentMonth);
 
         currentMonth++;
@@ -97,7 +97,7 @@ function Life() {
                 const buttonDuration = 0.5;
                 const pulseSize = 0.025;
                 timeline.set('.Continue', {scale: 0});
-                timeline.to('.Continue', {scale: 1 + pulseSize, buttonDuration}, titleDuration);
+                timeline.to('.Continue', {scale: 1 + pulseSize, duration: buttonDuration}, titleDuration);
                 timeline.to('.Continue', fadeIn(buttonDuration), titleDuration);
 
                 const pulseTimeline = gsap.timeline({repeat: -1});
@@ -176,7 +176,7 @@ function Life() {
                 {
                     years.map((year, y) => {
                         return (
-                            <Year y={y+1} tutorials={tutorials}/>
+                            <Year key={y+1} y={y+1} tutorials={tutorials}/>
                         );
                     })
                 }
