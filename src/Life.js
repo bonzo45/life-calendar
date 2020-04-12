@@ -136,38 +136,39 @@ function Year({y}) {
     const months = ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan'];
     const yearClass = `Year Year${y}`;
 
-    const bornIndex = {
-        year: 1,
-        month: 1,
-    };
-    const bornTutorial = (
-        <div className='Tutorial'>You were born!</div>
-    );
-    const bornClass = 'BirthMonth';
-
-    const ninetyIndex = {
-        year: 90,
-        month: 12,
-    };
-    const ninetyTutorial = (
-        <div className='Tutorial Right'>You are 90!</div>
-    );
-    const ninetyClass = 'Ninety';
+    const tutorials = [
+        {
+            year: 1,
+            month: 1,
+            tutorial: <div className='Tutorial'>You were born!</div>,
+            className: 'BirthMonth',
+        },
+        {
+            year: 90,
+            month: 12,
+            tutorial: <div className='Tutorial Right'>You are 90!</div>,
+            className: 'Ninety',
+        },
+    ];
 
     return (
         <div className={yearClass}>
             { months.map((month, m) => {
                 const monthNum = m + 1;
-                const monthClasses = classNames('Month', {
-                    [bornClass]: (y === bornIndex.year && monthNum === bornIndex.month),
-                    [ninetyClass]: (y === ninetyIndex.year && monthNum === ninetyIndex.month),
-                });
+                let monthClasses = 'Month';
+                for (const tutorial of tutorials) {
+                    monthClasses = classNames(monthClasses, {
+                        [tutorial.className]: y === tutorial.year && monthNum === tutorial.month,
+                    })
+                }
+
                 return (
                     <div key={monthNum} style={{zIndex: 12 - monthNum}}
                          className={monthClasses}
                     >
-                        {(y === bornIndex.year && monthNum === bornIndex.month) ? bornTutorial : null}
-                        {(y === ninetyIndex.year && monthNum === ninetyIndex.month) ? ninetyTutorial : null}
+                        { tutorials.map((tutorial, t) =>
+                            y === tutorial.year && monthNum === tutorial.month ? tutorial.tutorial : null
+                        )}
                     </div>
                 );
             })}
