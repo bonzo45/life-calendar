@@ -68,6 +68,19 @@ function getMonthsBetween(stepA, stepB) {
     const yearTo = stepB.year;
     const monthTo = stepB.month;
 
+    return (yearTo - yearFrom) * 12 + (monthTo - monthFrom);
+}
+
+function getMonthSelectorBetween(stepA, stepB) {
+    let yearFrom = 1;
+    let monthFrom = 0;
+    if (stepA) {
+        yearFrom = stepA.year;
+        monthFrom = stepA.month;
+    }
+    const yearTo = stepB.year;
+    const monthTo = stepB.month;
+
     let selectors = [];
     let currentYear = yearFrom;
     let currentMonth = monthFrom;
@@ -94,10 +107,12 @@ function getMonthsBetween(stepA, stepB) {
 }
 
 function animateBetween(timeline, stepA, stepB) {
-    const targets = getMonthsBetween(stepA, stepB);
+    const targets = getMonthSelectorBetween(stepA, stepB);
+    const months = getMonthsBetween(stepA, stepB);
+    const duration = 0.5;
+    const baseTime = 2;
+    const stagger = baseTime / months;
 
-    const duration = stepB.quickly ? 0.25 : 0.5;
-    const stagger = stepB.quickly ? 0.005 : 0.125;
     timeline.from(targets, {x: '-40px', duration: duration, stagger: stagger}, 'between');
     timeline.to(targets, fadeIn(duration, {stagger: stagger}), 'between');
 }
