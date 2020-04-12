@@ -53,15 +53,15 @@ function getMonthsBetween(tutorialA, tutorialB) {
     const yearTo = tutorialB.year;
     const monthTo = tutorialB.month;
 
-    let result = '';
+    let selectors = [];
     let currentYear = yearFrom;
     let currentMonth = monthFrom;
     const addToResult = (year, month) => {
-        result += ` .Year${year}.Month${month}`;
+        selectors.push(`.Year${year}.Month${month}`);
     };
 
     while (currentYear < yearTo || currentYear === yearTo && currentMonth <= monthTo) {
-        addToResult(currentYear, currentYear);
+        addToResult(currentYear, currentMonth);
 
         currentMonth++;
         if (currentMonth === 13) {
@@ -69,6 +69,8 @@ function getMonthsBetween(tutorialA, tutorialB) {
             currentMonth = 1;
         }
     }
+
+    return selectors.join(',');
 }
 
 
@@ -127,6 +129,7 @@ function Life() {
                 const targets = getMonthsBetween(tutorials[0], tutorials[1]);
                 // '.Year1 > .Month:not(.BirthMonth)'
                 // '.Year1 > .Month:not(.BirthMonth)'
+                console.log(targets);
                 timeline.from(targets, {x: '-40px', duration: year1Duration, stagger: year1Stagger}, 'year1');
                 timeline.to(targets, fadeIn(year1Duration, {stagger: year1Stagger}), 'year1');
 
