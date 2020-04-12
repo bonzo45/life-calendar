@@ -21,9 +21,6 @@ const tutorials = [
         animate: timeline => {
             timeline.addLabel('birth');
             const birthDuration = 0.5;
-            const birthStagger = 0.5;
-            timeline.from('.Month.BirthMonth', {x: '-40px', duration: birthDuration, stagger: birthStagger}, 'birth');
-            timeline.to('.Month.BirthMonth', fadeIn(birthDuration), 'birth');
             timeline.from('.Month.BirthMonth > .Tutorial', {x: '-40px', duration: birthDuration});
             timeline.to('.Month.BirthMonth > .Tutorial', fadeIn(birthDuration));
         },
@@ -63,8 +60,12 @@ const tutorials = [
 ];
 
 function getMonthsBetween(tutorialA, tutorialB) {
-    const yearFrom = tutorialA.year;
-    const monthFrom = tutorialA.month;
+    let yearFrom = 1;
+    let monthFrom = 0;
+    if (tutorialA) {
+        yearFrom = tutorialA.year;
+        monthFrom = tutorialA.month;
+    }
     const yearTo = tutorialB.year;
     const monthTo = tutorialB.month;
 
@@ -149,10 +150,6 @@ function Life() {
                 timeline.from('.MonthHeading', {y: '-18px', duration: headingsDuration, stagger: headingsStagger}, 'headings');
                 timeline.to('.MonthHeading', fadeIn(headingsDuration, {stagger: headingsStagger}), 'headings');
 
-                break;
-
-            case 2:
-                tutorials[0].animate(timeline);
                 break;
 
             default:
