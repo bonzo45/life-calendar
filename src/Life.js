@@ -39,6 +39,16 @@ const tutorials = [
         }
     },
     {
+        year: 5,
+        month: 1,
+        tutorial: <div key='tutorial-five' className='Tutorial'>You are 5!</div>,
+        className: 'Five',
+        animate: (timeline) => {
+            timeline.from('.Month.Five > .Tutorial', {x: '-40px', duration: tutorialDuration});
+            timeline.to('.Month.Five > .Tutorial', fadeIn(tutorialDuration));
+        }
+    },
+    {
         year: 90,
         month: 12,
         tutorial: <div key='tutorial-ninety' className='Tutorial Right'>You are 90!</div>,
