@@ -17,43 +17,39 @@ const tutorials = [
         year: 1,
         month: 1,
         tutorial: <div key='tutorial-birth' className='Tutorial'>You were born!</div>,
-        className: 'BirthMonth',
         animate: timeline => {
             timeline.addLabel('birth');
             const birthDuration = 0.5;
-            timeline.from('.Month.BirthMonth > .Tutorial', {x: '-40px', duration: birthDuration});
-            timeline.to('.Month.BirthMonth > .Tutorial', fadeIn(birthDuration));
+            timeline.from('.Message.BirthMonth', {x: '-40px', duration: birthDuration});
+            timeline.to('.Message.BirthMonth', fadeIn(birthDuration));
         },
     },
     {
         year: 1,
         month: 11,
         tutorial: <div key='tutorial-christmas' className='Tutorial Below'>Your first Christmas 🎄</div>,
-        className: 'Christmas',
         animate: (timeline) => {
-            timeline.from('.Month.Christmas > .Tutorial', {x: '-40px', duration: tutorialDuration});
-            timeline.to('.Month.Christmas > .Tutorial', fadeIn(tutorialDuration));
+            timeline.from('.Message.Christmas', {x: '-40px', duration: tutorialDuration});
+            timeline.to('.Message.Christmas', fadeIn(tutorialDuration));
         }
     },
     {
         year: 5,
         month: 1,
         tutorial: <div key='tutorial-five' className='Tutorial'>You are 5!</div>,
-        className: 'Five',
         animate: (timeline) => {
-            timeline.from('.Month.Five > .Tutorial', {x: '-40px', duration: tutorialDuration});
-            timeline.to('.Month.Five > .Tutorial', fadeIn(tutorialDuration));
+            timeline.from('.Message.Five', {x: '-40px', duration: tutorialDuration});
+            timeline.to('.Message.Five', fadeIn(tutorialDuration));
         }
     },
     {
         year: 90,
         month: 12,
         tutorial: <div key='tutorial-ninety' className='Tutorial Right'>You are 90!</div>,
-        className: 'Ninety',
         animate: timeline => {
             const ninetyDuration = 0.5;
-            timeline.from('.Month.Ninety > .Tutorial', {x: '40px', duration: ninetyDuration});
-            timeline.to('.Month.Ninety > .Tutorial', fadeIn(ninetyDuration));
+            timeline.from('.Message.Ninety', {x: '40px', duration: ninetyDuration});
+            timeline.to('.Message.Ninety', fadeIn(ninetyDuration));
         },
         quickly: true,
     },
@@ -182,15 +178,23 @@ function Life() {
                 >
                 </div>
             </div>
-            <div className="LifeCalendar">
-                <Months/>
-                {
-                    years.map((year, y) => {
-                        return (
-                            <Year key={y+1} y={y+1} tutorials={tutorials}/>
-                        );
-                    })
-                }
+            <div className="LifeCalendarWrapper">
+                <div className="Messages">
+                    <div key='tutorial-birth' className='Message BirthMonth'>You were born!</div>
+                    <div key='tutorial-christmas' className='Message Christmas'>Your first Christmas 🎄</div>
+                    <div key='tutorial-five' className='Message Five'>You are 5!</div>
+                    <div key='tutorial-ninety' className='Message Ninety'>You are 90!</div>
+                </div>
+                <div className="LifeCalendar">
+                    <Months/>
+                    {
+                        years.map((year, y) => {
+                            return (
+                                <Year key={y+1} y={y+1} tutorials={tutorials}/>
+                            );
+                        })
+                    }
+                </div>
             </div>
         </div>
   );
@@ -219,7 +223,6 @@ function Year({y, tutorials}) {
                 let monthClasses = `Month Year${y} Month${monthNum}`;
                 for (const tutorial of tutorials) {
                     monthClasses = classNames(monthClasses, {
-                        [tutorial.className]: y === tutorial.year && monthNum === tutorial.month,
                         TutorialMonth: y === tutorial.year && monthNum === tutorial.month,
                     })
                 }
@@ -227,11 +230,7 @@ function Year({y, tutorials}) {
                 return (
                     <div key={monthNum} style={{zIndex: 12 - monthNum}}
                          className={monthClasses}
-                    >
-                        { tutorials.map((tutorial, t) =>
-                            y === tutorial.year && monthNum === tutorial.month ? tutorial.tutorial : null
-                        )}
-                    </div>
+                    />
                 );
             })}
         </div>

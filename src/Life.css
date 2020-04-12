@@ -36,17 +36,32 @@
     background-color: #70a966;
 }
 
+.LifeCalendarWrapper {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    flex: 1 1 auto;
+}
+
+.Messages {
+    flex: 0 1 200px;
+}
+
+.Message {
+    visibility: hidden;
+}
+
 .LifeCalendar {
     visibility: hidden;
 
     flex: 1 1 auto;
-    width: calc(100% - 800px);
-    margin: 0 400px 40px 400px;
     border: solid white 2px;
     border-radius: 5px;
 
     display: flex;
     flex-direction: column;
+
+    overflow: hidden;
 }
 
 .MonthHeadings {
