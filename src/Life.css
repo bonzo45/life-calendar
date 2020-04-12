@@ -82,7 +82,7 @@
     border-top: 2px solid #282c34;
 }
 
-.Month.BirthMonth, .Month.Ninety {
+.Month.TutorialMonth {
     background-color: rgb(113, 179, 124);
 }
 

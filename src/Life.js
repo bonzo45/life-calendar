@@ -4,6 +4,49 @@ import classNames from 'classnames';
 
 import './Life.css';
 
+// Title
+// Calendar
+// Tutorial, Months, Tutorial, Months, Tutorial, Months, Tutorial.... <-- Next
+
+const fadeIn = (duration, others) => ({autoAlpha: 1, duration, ...others});
+
+const tutorials = [
+    {
+        year: 1,
+        month: 1,
+        tutorial: <div className='Tutorial'>You were born!</div>,
+        className: 'BirthMonth',
+        animate: timeline => {
+            timeline.addLabel('birth');
+            const birthDuration = 0.5;
+            const birthStagger = 0.5;
+            timeline.from('.MonthHeading.BirthMonth', {y: '-18px', duration: birthDuration, stagger: birthStagger}, 'birth');
+            timeline.to('.MonthHeading.BirthMonth', fadeIn(birthDuration), 'birth');
+            timeline.from('.Month.BirthMonth', {x: '-40px', duration: birthDuration, stagger: birthStagger}, 'birth');
+            timeline.to('.Month.BirthMonth', fadeIn(birthDuration), 'birth');
+            timeline.from('.Month.BirthMonth > .Tutorial', {x: '-40px', duration: birthDuration});
+            timeline.to('.Month.BirthMonth > .Tutorial', fadeIn(birthDuration));
+        },
+    },
+    {
+        year: 1,
+        month: 11,
+        tutorial: <div className='Tutorial'>Your first Christmas 🎄'</div>,
+        className: 'Christmas',
+    },
+    {
+        year: 90,
+        month: 12,
+        tutorial: <div className='Tutorial Right'>You are 90!</div>,
+        className: 'Ninety',
+        animate: timeline => {
+            const ninetyDuration = 0.5;
+            timeline.from('.Month.Ninety > .Tutorial', {x: '40px', duration: ninetyDuration});
+            timeline.to('.Month.Ninety > .Tutorial', fadeIn(ninetyDuration));
+        }
+    },
+];
+
 function Life() {
     const [ state, setState ] = useState(0);
 
@@ -11,8 +54,6 @@ function Life() {
         const timeline = gsap.timeline();
         timeline.to('.MonthHeading.BirthMonth, .Month.BirthMonth, .MonthHeading:not(.BirthMonth), .Month:not(.BirthMonth)', {opacity: 0, duration: 0});
     };
-
-    const fadeIn = (duration, others) => ({autoAlpha: 1, duration, ...others});
 
     const runAnimation = () => {
         const timeline = gsap.timeline();
@@ -48,15 +89,7 @@ function Life() {
                 timeline.from('.LifeCalendar', {scale: 0.95, duration: calendarDuration}, 'calendar');
                 timeline.to('.LifeCalendar', fadeIn(calendarDuration), 'calendar');
 
-                timeline.addLabel('birth');
-                const birthDuration = 0.5;
-                const birthStagger = 0.5;
-                timeline.from('.MonthHeading.BirthMonth', {y: '-18px', duration: birthDuration, stagger: birthStagger}, 'birth');
-                timeline.to('.MonthHeading.BirthMonth', fadeIn(birthDuration), 'birth');
-                timeline.from('.Month.BirthMonth', {x: '-40px', duration: birthDuration, stagger: birthStagger}, 'birth');
-                timeline.to('.Month.BirthMonth', fadeIn(birthDuration), 'birth');
-                timeline.from('.Month.BirthMonth > .Tutorial', {x: '-40px', duration: birthDuration});
-                timeline.to('.Month.BirthMonth > .Tutorial', fadeIn(birthDuration));
+                tutorials[0].animate(timeline);
                 break;
 
             case 2:
@@ -76,9 +109,7 @@ function Life() {
                 timeline.from('.Year:not(.Year1) > .Month', {x: '-40px', duration: restOfLifeDuration, stagger: restOfLifeStagger}, 'Year 1');
                 timeline.to('.Year:not(.Year1) > .Month', fadeIn(restOfLifeDuration, {stagger: restOfLifeStagger}), 'Year 1');
 
-                const ninetyDuration = 0.5;
-                timeline.from('.Month.Ninety > .Tutorial', {x: '40px', duration: ninetyDuration});
-                timeline.to('.Month.Ninety > .Tutorial', fadeIn(ninetyDuration));
+                tutorials[2].animate(timeline);
                 break;
         }
         setState(state + 1);
@@ -111,7 +142,7 @@ function Life() {
                 {
                     years.map((year, y) => {
                         return (
-                            <Year y={y+1}/>
+                            <Year y={y+1} tutorials={tutorials}/>
                         );
                     })
                 }
@@ -132,24 +163,9 @@ function Months() {
     );
 }
 
-function Year({y}) {
+function Year({y, tutorials}) {
     const months = ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan'];
     const yearClass = `Year Year${y}`;
-
-    const tutorials = [
-        {
-            year: 1,
-            month: 1,
-            tutorial: <div className='Tutorial'>You were born!</div>,
-            className: 'BirthMonth',
-        },
-        {
-            year: 90,
-            month: 12,
-            tutorial: <div className='Tutorial Right'>You are 90!</div>,
-            className: 'Ninety',
-        },
-    ];
 
     return (
         <div className={yearClass}>
@@ -159,6 +175,7 @@ function Year({y}) {
                 for (const tutorial of tutorials) {
                     monthClasses = classNames(monthClasses, {
                         [tutorial.className]: y === tutorial.year && monthNum === tutorial.month,
+                        TutorialMonth: y === tutorial.year && monthNum === tutorial.month,
                     })
                 }
 
