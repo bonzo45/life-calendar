@@ -47,6 +47,31 @@ const tutorials = [
     },
 ];
 
+function getMonthsBetween(tutorialA, tutorialB) {
+    const yearFrom = tutorialA.year;
+    const monthFrom = tutorialA.month;
+    const yearTo = tutorialB.year;
+    const monthTo = tutorialB.month;
+
+    let result = '';
+    let currentYear = yearFrom;
+    let currentMonth = monthFrom;
+    const addToResult = (year, month) => {
+        result += ` .Year${year}.Month${month}`;
+    };
+
+    while (currentYear < yearTo || currentYear === yearTo && currentMonth <= monthTo) {
+        addToResult(currentYear, currentYear);
+
+        currentMonth++;
+        if (currentMonth === 13) {
+            currentYear++;
+            currentMonth = 1;
+        }
+    }
+}
+
+
 function Life() {
     const [ state, setState ] = useState(0);
 
@@ -98,8 +123,14 @@ function Life() {
                 const year1Stagger = 0.25;
                 timeline.from('.MonthHeading:not(.BirthMonth)', {y: '-18px', duration: year1Duration, stagger: year1Stagger}, 'year1');
                 timeline.to('.MonthHeading:not(.BirthMonth)', fadeIn(year1Duration, {stagger: year1Stagger}), 'year1');
-                timeline.from('.Year1 > .Month:not(.BirthMonth)', {x: '-40px', duration: year1Duration, stagger: year1Stagger}, 'year1');
-                timeline.to('.Year1 > .Month:not(.BirthMonth)', fadeIn(year1Duration, {stagger: year1Stagger}), 'year1');
+
+                const targets = getMonthsBetween(tutorials[0], tutorials[1]);
+                // '.Year1 > .Month:not(.BirthMonth)'
+                // '.Year1 > .Month:not(.BirthMonth)'
+                timeline.from(targets, {x: '-40px', duration: year1Duration, stagger: year1Stagger}, 'year1');
+                timeline.to(targets, fadeIn(year1Duration, {stagger: year1Stagger}), 'year1');
+
+
                 break;
 
             case 3:
@@ -171,7 +202,7 @@ function Year({y, tutorials}) {
         <div className={yearClass}>
             { months.map((month, m) => {
                 const monthNum = m + 1;
-                let monthClasses = 'Month';
+                let monthClasses = `Month Year${y} Month${monthNum}`;
                 for (const tutorial of tutorials) {
                     monthClasses = classNames(monthClasses, {
                         [tutorial.className]: y === tutorial.year && monthNum === tutorial.month,
