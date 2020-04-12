@@ -31,7 +31,7 @@ const tutorials = [
     {
         year: 1,
         month: 11,
-        tutorial: <div key='tutorial-christmas' className='Tutorial'>Your first Christmas 🎄'</div>,
+        tutorial: <div key='tutorial-christmas' className='Tutorial Below'>Your first Christmas 🎄</div>,
         className: 'Christmas',
         animate: (timeline) => {
             timeline.from('.Month.Christmas > .Tutorial', {x: '-40px', duration: tutorialDuration});
