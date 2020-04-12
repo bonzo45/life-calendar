@@ -104,7 +104,6 @@ function Life() {
         const timeline = gsap.timeline();
 
         switch (state) {
-            default:
             case 0:
                 timeline.addLabel('start');
 
@@ -146,14 +145,9 @@ function Life() {
                 tutorials[0].animate(timeline);
                 break;
 
-            case 3:
-                animateBetween(timeline, tutorials[0], tutorials[1]);
-                tutorials[1].animate(timeline);
-                break;
-
-            case 4:
-                animateBetween(timeline, tutorials[1], tutorials[2]);
-                tutorials[2].animate(timeline);
+            default:
+                animateBetween(timeline, tutorials[state - 3], tutorials[state - 2]);
+                tutorials[state - 2].animate(timeline);
                 break;
         }
         setState(state + 1);
