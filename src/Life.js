@@ -56,18 +56,23 @@ function getMonthsBetween(tutorialA, tutorialB) {
     let selectors = [];
     let currentYear = yearFrom;
     let currentMonth = monthFrom;
+    const incrementMonth = (currentYear, currentMonth) => {
+        currentMonth++;
+        if (currentMonth === 13) {
+            currentYear++;
+            currentMonth = 1;
+        }
+        return [currentYear, currentMonth];
+    };
+
+    [currentYear, currentMonth] = incrementMonth(currentYear, currentMonth);
     const addToResult = (year, month) => {
         selectors.push(`.Year${year}.Month${month}`);
     };
 
     while ((currentYear < yearTo) || ((currentYear === yearTo) && (currentMonth <= monthTo))) {
         addToResult(currentYear, currentMonth);
-
-        currentMonth++;
-        if (currentMonth === 13) {
-            currentYear++;
-            currentMonth = 1;
-        }
+        [currentYear, currentMonth] = incrementMonth(currentYear, currentMonth);
     }
 
     return selectors.join(',');
