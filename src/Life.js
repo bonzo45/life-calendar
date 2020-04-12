@@ -40,6 +40,14 @@ const steps = [
         }
     },
     {
+        year: 27,
+        month: 3,
+        animate: (timeline) => {
+            timeline.from('.Message.Now', {x: '-40px', duration: messageDuration});
+            timeline.to('.Message.Now', fadeIn(messageDuration));
+        }
+    },
+    {
         year: 90,
         month: 12,
         animate: timeline => {
@@ -178,6 +186,7 @@ function Life() {
                     <div key='message-birth' className='Message BirthMonth'>You were born!</div>
                     <div key='message-christmas' className='Message Christmas'>Your first Christmas 🎄</div>
                     <div key='message-five' className='Message Five'>You are 5!</div>
+                    <div key='message-now' className='Message Now'>You are here!</div>
                     <div key='message-ninety' className='Message Ninety'>You are 90!</div>
                 </div>
                 <div className="LifeCalendar">
