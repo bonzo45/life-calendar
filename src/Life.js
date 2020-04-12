@@ -5,10 +5,12 @@ import classNames from 'classnames';
 import './Life.css';
 
 // Title
-// Calendar
-// Tutorial, Months, Tutorial, Months, Tutorial, Months, Tutorial.... <-- Next
+// Calendar, MonthHeadings
+// Tutorial, Months + Tutorial, Months, Tutorial, Months, Tutorial.... <-- Next
 
 const fadeIn = (duration, others) => ({autoAlpha: 1, duration, ...others});
+
+const tutorialDuration = 0.5;
 
 const tutorials = [
     {
@@ -20,8 +22,6 @@ const tutorials = [
             timeline.addLabel('birth');
             const birthDuration = 0.5;
             const birthStagger = 0.5;
-            timeline.from('.MonthHeading.BirthMonth', {y: '-18px', duration: birthDuration, stagger: birthStagger}, 'birth');
-            timeline.to('.MonthHeading.BirthMonth', fadeIn(birthDuration), 'birth');
             timeline.from('.Month.BirthMonth', {x: '-40px', duration: birthDuration, stagger: birthStagger}, 'birth');
             timeline.to('.Month.BirthMonth', fadeIn(birthDuration), 'birth');
             timeline.from('.Month.BirthMonth > .Tutorial', {x: '-40px', duration: birthDuration});
@@ -33,6 +33,10 @@ const tutorials = [
         month: 11,
         tutorial: <div key='tutorial-christmas' className='Tutorial'>Your first Christmas 🎄'</div>,
         className: 'Christmas',
+        animate: (timeline) => {
+            timeline.from('.Month.Christmas > .Tutorial', {x: '-40px', duration: tutorialDuration});
+            timeline.to('.Month.Christmas > .Tutorial', fadeIn(tutorialDuration));
+        }
     },
     {
         year: 90,
@@ -78,6 +82,13 @@ function getMonthsBetween(tutorialA, tutorialB) {
     return selectors.join(',');
 }
 
+function animateBetween(timeline, tutorialA, tutorialB) {
+    const targets = getMonthsBetween(tutorialA, tutorialB);
+    const betweenDuration = 0.5;
+    const betweenStagger = 0.125;
+    timeline.from(targets, {x: '-40px', duration: betweenDuration, stagger: betweenStagger}, 'between');
+    timeline.to(targets, fadeIn(betweenDuration, {stagger: betweenStagger}), 'between');
+}
 
 function Life() {
     const [ state, setState ] = useState(0);
@@ -111,7 +122,7 @@ function Life() {
                 pulseTimeline.to('.Continue', {scale: 1 + pulseSize, duration: pulseDuration, ease: "sine.inOut"});
                 timeline.add(pulseTimeline);
 
-                // timeline.seek(10);
+                timeline.seek(10);
                 break;
 
             case 1:
@@ -121,27 +132,24 @@ function Life() {
                 timeline.from('.LifeCalendar', {scale: 0.95, duration: calendarDuration}, 'calendar');
                 timeline.to('.LifeCalendar', fadeIn(calendarDuration), 'calendar');
 
-                tutorials[0].animate(timeline);
+                timeline.addLabel('year1');
+                const headingsDuration = 0.5;
+                const headingsStagger = 0.125;
+                timeline.from('.MonthHeading', {y: '-18px', duration: headingsDuration, stagger: headingsStagger}, 'headings');
+                timeline.to('.MonthHeading', fadeIn(headingsDuration, {stagger: headingsStagger}), 'headings');
+
                 break;
 
             case 2:
-                timeline.addLabel('year1');
-                const year1Duration = 0.5;
-                const year1Stagger = 0.25;
-                timeline.from('.MonthHeading:not(.BirthMonth)', {y: '-18px', duration: year1Duration, stagger: year1Stagger}, 'year1');
-                timeline.to('.MonthHeading:not(.BirthMonth)', fadeIn(year1Duration, {stagger: year1Stagger}), 'year1');
-
-                const targets = getMonthsBetween(tutorials[0], tutorials[1]);
-                // '.Year1 > .Month:not(.BirthMonth)'
-                // '.Year1 > .Month:not(.BirthMonth)'
-                console.log(targets);
-                timeline.from(targets, {x: '-40px', duration: year1Duration, stagger: year1Stagger}, 'year1');
-                timeline.to(targets, fadeIn(year1Duration, {stagger: year1Stagger}), 'year1');
-
-
+                tutorials[0].animate(timeline);
                 break;
 
             case 3:
+                animateBetween(timeline, tutorials[0], tutorials[1]);
+                tutorials[1].animate(timeline);
+                break;
+
+            case 4:
                 timeline.addLabel('Rest of Life');
                 const restOfLifeDuration = 0.25;
                 const restOfLifeStagger = 0.005;
