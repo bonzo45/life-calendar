@@ -16,7 +16,6 @@ const tutorials = [
     {
         year: 1,
         month: 1,
-        tutorial: <div key='tutorial-birth' className='Tutorial'>You were born!</div>,
         animate: timeline => {
             timeline.addLabel('birth');
             const birthDuration = 0.5;
@@ -27,7 +26,6 @@ const tutorials = [
     {
         year: 1,
         month: 11,
-        tutorial: <div key='tutorial-christmas' className='Tutorial Below'>Your first Christmas 🎄</div>,
         animate: (timeline) => {
             timeline.from('.Message.Christmas', {x: '-40px', duration: tutorialDuration});
             timeline.to('.Message.Christmas', fadeIn(tutorialDuration));
@@ -36,7 +34,6 @@ const tutorials = [
     {
         year: 5,
         month: 1,
-        tutorial: <div key='tutorial-five' className='Tutorial'>You are 5!</div>,
         animate: (timeline) => {
             timeline.from('.Message.Five', {x: '-40px', duration: tutorialDuration});
             timeline.to('.Message.Five', fadeIn(tutorialDuration));
@@ -45,11 +42,9 @@ const tutorials = [
     {
         year: 90,
         month: 12,
-        tutorial: <div key='tutorial-ninety' className='Tutorial Right'>You are 90!</div>,
         animate: timeline => {
-            const ninetyDuration = 0.5;
-            timeline.from('.Message.Ninety', {x: '40px', duration: ninetyDuration});
-            timeline.to('.Message.Ninety', fadeIn(ninetyDuration));
+            timeline.from('.Message.Ninety', {x: '40px', duration: tutorialDuration});
+            timeline.to('.Message.Ninety', fadeIn(tutorialDuration));
         },
         quickly: true,
     },
@@ -180,10 +175,10 @@ function Life() {
             </div>
             <div className="LifeCalendarWrapper">
                 <div className="Messages">
-                    <div key='tutorial-birth' className='Message BirthMonth'>You were born!</div>
-                    <div key='tutorial-christmas' className='Message Christmas'>Your first Christmas 🎄</div>
-                    <div key='tutorial-five' className='Message Five'>You are 5!</div>
-                    <div key='tutorial-ninety' className='Message Ninety'>You are 90!</div>
+                    <div key='message-birth' className='Message BirthMonth'>You were born!</div>
+                    <div key='message-christmas' className='Message Christmas'>Your first Christmas 🎄</div>
+                    <div key='message-five' className='Message Five'>You are 5!</div>
+                    <div key='message-ninety' className='Message Ninety'>You are 90!</div>
                 </div>
                 <div className="LifeCalendar">
                     <Months/>
