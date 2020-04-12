@@ -82,12 +82,13 @@ function getMonthsBetween(tutorialA, tutorialB) {
     return selectors.join(',');
 }
 
-function animateBetween(timeline, tutorialA, tutorialB) {
+function animateBetween(timeline, tutorialA, tutorialB, quickly = false) {
     const targets = getMonthsBetween(tutorialA, tutorialB);
-    const betweenDuration = 0.5;
-    const betweenStagger = 0.125;
-    timeline.from(targets, {x: '-40px', duration: betweenDuration, stagger: betweenStagger}, 'between');
-    timeline.to(targets, fadeIn(betweenDuration, {stagger: betweenStagger}), 'between');
+
+    const duration = quickly ? 0.25 : 0.5;
+    const stagger = quickly ? 0.005 : 0.125;
+    timeline.from(targets, {x: '-40px', duration: duration, stagger: stagger}, 'between');
+    timeline.to(targets, fadeIn(duration, {stagger: stagger}), 'between');
 }
 
 function Life() {
@@ -150,12 +151,7 @@ function Life() {
                 break;
 
             case 4:
-                timeline.addLabel('Rest of Life');
-                const restOfLifeDuration = 0.25;
-                const restOfLifeStagger = 0.005;
-                timeline.from('.Year:not(.Year1) > .Month', {x: '-40px', duration: restOfLifeDuration, stagger: restOfLifeStagger}, 'Year 1');
-                timeline.to('.Year:not(.Year1) > .Month', fadeIn(restOfLifeDuration, {stagger: restOfLifeStagger}), 'Year 1');
-
+                animateBetween(timeline, tutorials[1], tutorials[2], true);
                 tutorials[2].animate(timeline);
                 break;
         }
