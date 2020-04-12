@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { gsap } from 'gsap';
+import classNames from 'classnames';
+
 import './Life.css';
 
 function Life() {
@@ -133,14 +135,42 @@ function Months() {
 function Year({y}) {
     const months = ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan'];
     const yearClass = `Year Year${y}`;
+
+    const bornIndex = {
+        year: 1,
+        month: 1,
+    };
+    const bornTutorial = (
+        <div className='Tutorial'>You were born!</div>
+    );
+    const bornClass = 'BirthMonth';
+
+    const ninetyIndex = {
+        year: 90,
+        month: 12,
+    };
+    const ninetyTutorial = (
+        <div className='Tutorial Right'>You are 90!</div>
+    );
+    const ninetyClass = 'Ninety';
+
     return (
         <div className={yearClass}>
-            { months.map((month, m) =>
-                <div key={m} style={{zIndex: 12 - m}} className={`Month ${(y === 1 && m === 0) ? 'BirthMonth' : ''} ${(y === 90 && m === 11) ? 'Ninety' : ''}`}>
-                    {(y === 1 && m === 0) ? <div className="Tutorial">You were born!</div> : null}
-                    {(y === 90 && m === 11) ? <div className="Tutorial Right">You are 90!</div> : null}
-                </div>
-            )}
+            { months.map((month, m) => {
+                const monthNum = m + 1;
+                const monthClasses = classNames('Month', {
+                    [bornClass]: (y === bornIndex.year && monthNum === bornIndex.month),
+                    [ninetyClass]: (y === ninetyIndex.year && monthNum === ninetyIndex.month),
+                });
+                return (
+                    <div key={monthNum} style={{zIndex: 12 - monthNum}}
+                         className={monthClasses}
+                    >
+                        {(y === bornIndex.year && monthNum === bornIndex.month) ? bornTutorial : null}
+                        {(y === ninetyIndex.year && monthNum === ninetyIndex.month) ? ninetyTutorial : null}
+                    </div>
+                );
+            })}
         </div>
     );
 }
