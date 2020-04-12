@@ -98,7 +98,7 @@
     border-top: 2px solid #282c34;
 }
 
-.Month.TutorialMonth {
+.Month.MonthWithMessage {
     background-color: rgb(113, 179, 124);
 }
 

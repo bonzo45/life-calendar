@@ -10,9 +10,9 @@ import './Life.css';
 
 const fadeIn = (duration, others) => ({autoAlpha: 1, duration, ...others});
 
-const tutorialDuration = 0.5;
+const messageDuration = 0.5;
 
-const tutorials = [
+const steps = [
     {
         year: 1,
         month: 1,
@@ -27,38 +27,38 @@ const tutorials = [
         year: 1,
         month: 11,
         animate: (timeline) => {
-            timeline.from('.Message.Christmas', {x: '-40px', duration: tutorialDuration});
-            timeline.to('.Message.Christmas', fadeIn(tutorialDuration));
+            timeline.from('.Message.Christmas', {x: '-40px', duration: messageDuration});
+            timeline.to('.Message.Christmas', fadeIn(messageDuration));
         }
     },
     {
         year: 5,
         month: 1,
         animate: (timeline) => {
-            timeline.from('.Message.Five', {x: '-40px', duration: tutorialDuration});
-            timeline.to('.Message.Five', fadeIn(tutorialDuration));
+            timeline.from('.Message.Five', {x: '-40px', duration: messageDuration});
+            timeline.to('.Message.Five', fadeIn(messageDuration));
         }
     },
     {
         year: 90,
         month: 12,
         animate: timeline => {
-            timeline.from('.Message.Ninety', {x: '40px', duration: tutorialDuration});
-            timeline.to('.Message.Ninety', fadeIn(tutorialDuration));
+            timeline.from('.Message.Ninety', {x: '40px', duration: messageDuration});
+            timeline.to('.Message.Ninety', fadeIn(messageDuration));
         },
         quickly: true,
     },
 ];
 
-function getMonthsBetween(tutorialA, tutorialB) {
+function getMonthsBetween(stepA, stepB) {
     let yearFrom = 1;
     let monthFrom = 0;
-    if (tutorialA) {
-        yearFrom = tutorialA.year;
-        monthFrom = tutorialA.month;
+    if (stepA) {
+        yearFrom = stepA.year;
+        monthFrom = stepA.month;
     }
-    const yearTo = tutorialB.year;
-    const monthTo = tutorialB.month;
+    const yearTo = stepB.year;
+    const monthTo = stepB.month;
 
     let selectors = [];
     let currentYear = yearFrom;
@@ -85,11 +85,11 @@ function getMonthsBetween(tutorialA, tutorialB) {
     return selectors.join(',');
 }
 
-function animateBetween(timeline, tutorialA, tutorialB) {
-    const targets = getMonthsBetween(tutorialA, tutorialB);
+function animateBetween(timeline, stepA, stepB) {
+    const targets = getMonthsBetween(stepA, stepB);
 
-    const duration = tutorialB.quickly ? 0.25 : 0.5;
-    const stagger = tutorialB.quickly ? 0.005 : 0.125;
+    const duration = stepB.quickly ? 0.25 : 0.5;
+    const stagger = stepB.quickly ? 0.005 : 0.125;
     timeline.from(targets, {x: '-40px', duration: duration, stagger: stagger}, 'between');
     timeline.to(targets, fadeIn(duration, {stagger: stagger}), 'between');
 }
@@ -144,8 +144,8 @@ function Life() {
                 break;
 
             default:
-                animateBetween(timeline, tutorials[state - 3], tutorials[state - 2]);
-                tutorials[state - 2].animate(timeline);
+                animateBetween(timeline, steps[state - 3], steps[state - 2]);
+                steps[state - 2].animate(timeline);
                 break;
         }
         setState(state + 1);
@@ -185,7 +185,7 @@ function Life() {
                     {
                         years.map((year, y) => {
                             return (
-                                <Year key={y+1} y={y+1} tutorials={tutorials}/>
+                                <Year key={y+1} y={y+1} steps={steps}/>
                             );
                         })
                     }
@@ -207,7 +207,7 @@ function Months() {
     );
 }
 
-function Year({y, tutorials}) {
+function Year({y, steps}) {
     const months = ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan'];
     const yearClass = `Year Year${y}`;
 
@@ -216,9 +216,9 @@ function Year({y, tutorials}) {
             { months.map((month, m) => {
                 const monthNum = m + 1;
                 let monthClasses = `Month Year${y} Month${monthNum}`;
-                for (const tutorial of tutorials) {
+                for (const step of steps) {
                     monthClasses = classNames(monthClasses, {
-                        TutorialMonth: y === tutorial.year && monthNum === tutorial.month,
+                        MonthWithMessage: y === step.year && monthNum === step.month,
                     })
                 }
 
