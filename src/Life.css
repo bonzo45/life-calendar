@@ -46,6 +46,7 @@
 
 .Messages {
     flex: 0 1 200px;
+    padding-top: 400px;
 }
 
 .Message {

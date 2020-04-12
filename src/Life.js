@@ -12,47 +12,45 @@ const fadeIn = (duration, others) => ({autoAlpha: 1, duration, ...others});
 
 const messageDuration = 0.5;
 
+const messageAnimation = (timeline, className) => {
+    timeline.to(`.Message.${className}`, fadeIn(messageDuration));
+    timeline.from(`.Message.${className}`, {x: '400px', duration: messageDuration}, `+=${messageDuration}`);
+};
+
 const steps = [
     {
         year: 1,
         month: 1,
         animate: timeline => {
-            timeline.addLabel('birth');
-            const birthDuration = 0.5;
-            timeline.from('.Message.BirthMonth', {x: '-40px', duration: birthDuration});
-            timeline.to('.Message.BirthMonth', fadeIn(birthDuration));
+            messageAnimation(timeline, 'BirthMonth');
         },
     },
     {
         year: 1,
         month: 11,
         animate: (timeline) => {
-            timeline.from('.Message.Christmas', {x: '-40px', duration: messageDuration});
-            timeline.to('.Message.Christmas', fadeIn(messageDuration));
+            messageAnimation(timeline, 'Christmas');
         }
     },
     {
         year: 5,
         month: 1,
         animate: (timeline) => {
-            timeline.from('.Message.Five', {x: '-40px', duration: messageDuration});
-            timeline.to('.Message.Five', fadeIn(messageDuration));
+            messageAnimation(timeline, 'Five');
         }
     },
     {
         year: 27,
         month: 3,
         animate: (timeline) => {
-            timeline.from('.Message.Now', {x: '-40px', duration: messageDuration});
-            timeline.to('.Message.Now', fadeIn(messageDuration));
+            messageAnimation(timeline, 'Now');
         }
     },
     {
         year: 90,
         month: 12,
         animate: timeline => {
-            timeline.from('.Message.Ninety', {x: '40px', duration: messageDuration});
-            timeline.to('.Message.Ninety', fadeIn(messageDuration));
+            messageAnimation(timeline, 'Ninety');
         },
     },
 ];
