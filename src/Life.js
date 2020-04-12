@@ -47,7 +47,8 @@ const tutorials = [
             const ninetyDuration = 0.5;
             timeline.from('.Month.Ninety > .Tutorial', {x: '40px', duration: ninetyDuration});
             timeline.to('.Month.Ninety > .Tutorial', fadeIn(ninetyDuration));
-        }
+        },
+        quickly: true,
     },
 ];
 
@@ -82,11 +83,11 @@ function getMonthsBetween(tutorialA, tutorialB) {
     return selectors.join(',');
 }
 
-function animateBetween(timeline, tutorialA, tutorialB, quickly = false) {
+function animateBetween(timeline, tutorialA, tutorialB) {
     const targets = getMonthsBetween(tutorialA, tutorialB);
 
-    const duration = quickly ? 0.25 : 0.5;
-    const stagger = quickly ? 0.005 : 0.125;
+    const duration = tutorialB.quickly ? 0.25 : 0.5;
+    const stagger = tutorialB.quickly ? 0.005 : 0.125;
     timeline.from(targets, {x: '-40px', duration: duration, stagger: stagger}, 'between');
     timeline.to(targets, fadeIn(duration, {stagger: stagger}), 'between');
 }
@@ -151,7 +152,7 @@ function Life() {
                 break;
 
             case 4:
-                animateBetween(timeline, tutorials[1], tutorials[2], true);
+                animateBetween(timeline, tutorials[1], tutorials[2]);
                 tutorials[2].animate(timeline);
                 break;
         }
