@@ -54,7 +54,6 @@ const steps = [
             timeline.from('.Message.Ninety', {x: '40px', duration: messageDuration});
             timeline.to('.Message.Ninety', fadeIn(messageDuration));
         },
-        quickly: true,
     },
 ];
 
