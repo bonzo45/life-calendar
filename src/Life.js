@@ -16,12 +16,19 @@ const messageAnimation = (timeline, className) => {
     timeline.from(`.Message.${className}`, {x: '400px', duration: messageDuration}, `+=${messageDuration}`);
 };
 
+const messageAnimationRef = (timeline, ref, className) => {
+    const [translationX, translationY] = translationToCenter(ref);
+    timeline.set(`.Message.${className}`, {scale: 0.5, filter: 'blur(5px)', x: translationX, y: translationY}, '+=0.5');
+    timeline.to(`.Message.${className}`, fadeIn(2, {scale: 2, filter: 'blur(0px)'}));
+    timeline.to(`.Message.${className}`, {x: 0, y: 0, scale: 1, duration: 1}, '+=1.5');
+};
+
 const steps = [
     {
         year: 1,
         month: 1,
-        animate: timeline => {
-            messageAnimation(timeline, 'BirthMonth');
+        animate: (timeline, ref) => {
+            messageAnimationRef(timeline, ref, 'BirthMonth');
         },
     },
     {
@@ -113,10 +120,20 @@ function animateBetween(timeline, stepA, stepB) {
     timeline.to(targets, fadeIn(duration, {stagger: stagger}), 'between');
 }
 
+function translationToCenter(elementRef) {
+    const fromX = window.innerWidth / 2;
+    const fromY = window.innerHeight / 2;
+    const rect = elementRef.current.getBoundingClientRect();
+    const currentX = rect.x + rect.width / 2;
+    const currentY = rect.y + rect.height / 2;
+    return [fromX - currentX, fromY - currentY];
+}
+
 function Life() {
     const [ state, setState ] = useState(0);
 
     const titleRef = useRef();
+    const bornRef = useRef();
 
     const prepareAnimation = () => {
         const timeline = gsap.timeline();
@@ -131,14 +148,7 @@ function Life() {
             case 0:
                 timeline.addLabel('start');
 
-                const fromX = window.innerWidth / 2;
-                const fromY = window.innerHeight / 2;
-                const rect = titleRef.current.getBoundingClientRect();
-                const currentX = rect.x + rect.width / 2;
-                const currentY = rect.y + rect.height / 2;
-                const translationX = fromX - currentX;
-                const translationY = fromY - currentY;
-
+                const [translationX, translationY] = translationToCenter(titleRef);
                 timeline.set('.LifeTitle', {scale: 0.5, filter: 'blur(5px)', x: translationX, y: translationY}, '+=0.5');
                 timeline.to('.LifeTitle', fadeIn(2, {scale: 2, filter: 'blur(0px)'}));
                 timeline.to('.LifeTitle', {x: 0, y: 0, scale: 1, duration: 1}, '+=1.5');
@@ -176,7 +186,7 @@ function Life() {
 
             default:
                 animateBetween(timeline, steps[state - 3], steps[state - 2]);
-                steps[state - 2].animate(timeline);
+                steps[state - 2].animate(timeline, bornRef);
                 break;
         }
         setState(state + 1);
@@ -207,7 +217,7 @@ function Life() {
             </div>
             <div className="LifeCalendarWrapper">
                 <div className="Messages">
-                    <div key='message-birth' className='Message BirthMonth'>You were born!</div>
+                    <div key='message-birth' className='Message BirthMonth' ref={bornRef}>You were born!</div>
                     <div key='message-christmas' className='Message Christmas'>🎄 Your first Christmas!</div>
                     <div key='message-five' className='Message Five'>You are 5!</div>
                     <div key='message-now' className='Message Now'>Now!</div>
