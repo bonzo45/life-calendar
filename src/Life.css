@@ -125,23 +125,3 @@
 .Month:first-child {
     border-left: 2px solid #282c34;
 }
-
-.Tutorial {
-    position: absolute;
-    right: calc(100% + 10px);
-    width: 200px;
-    font-size: 18px;
-    opacity: 0;
-    background-color: #282c34;
-    border: solid white 1px;
-    border-radius: 5px;
-}
-
-.Tutorial.Right {
-    left: calc(100% + 10px);
-}
-
-.Tutorial.Below {
-    top: calc(100% + 10px);
-    left: 0;
-}
