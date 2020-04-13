@@ -17,6 +17,12 @@
     visibility: hidden;
 
     margin: 40px 20px;
+
+    /*
+     Let the browser know that this element is going to be transformed,
+     this fixed the scaling looking jittery in Chrome.
+     */
+    will-change: transform;
 }
 
 .Continue {
@@ -30,6 +36,14 @@
     width: 40px;
     height: 40px;
     border-radius: 500px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Continue svg {
+    transform: scale(0.7) translateX(4%);
 }
 
 .Continue:hover {

@@ -1,12 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import { gsap } from 'gsap';
 import classNames from 'classnames';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlay } from '@fortawesome/free-solid-svg-icons'
 
 import './Life.css';
-
-// Title
-// Calendar, MonthHeadings
-// Tutorial, Months + Tutorial, Months, Tutorial, Months, Tutorial.... <-- Next
 
 const fadeIn = (duration, others) => ({autoAlpha: 1, duration, ...others});
 
@@ -107,7 +105,7 @@ function animateBetween(timeline, stepA, stepB) {
     const targets = getMonthSelectorBetween(stepA, stepB);
     const months = getMonthsBetween(stepA, stepB);
     const duration = 0.5;
-    const baseTime = 2;
+    const baseTime = 4;
     const stagger = baseTime / months;
 
     timeline.from(targets, {x: '-40px', duration: duration, stagger: stagger}, 'between');
@@ -130,12 +128,13 @@ function Life() {
                 timeline.addLabel('start');
 
                 const titleDuration = 2;
-                timeline.from('.LifeTitle', {y: '-100px', duration: titleDuration}, 'start');
+                timeline.set('.LifeTitle', {scale: 0.5}, 'start');
+                timeline.to('.LifeTitle', {scale: 1, duration: titleDuration}, 'start');
                 timeline.to('.LifeTitle', fadeIn(titleDuration), 'start');
 
                 const buttonDuration = 0.5;
                 const pulseSize = 0.025;
-                timeline.set('.Continue', {scale: 0});
+                timeline.set('.Continue', {scale: 0}, titleDuration);
                 timeline.to('.Continue', {scale: 1 + pulseSize, duration: buttonDuration}, titleDuration);
                 timeline.to('.Continue', fadeIn(buttonDuration), titleDuration);
 
@@ -145,7 +144,7 @@ function Life() {
                 pulseTimeline.to('.Continue', {scale: 1 + pulseSize, duration: pulseDuration, ease: "sine.inOut"});
                 timeline.add(pulseTimeline);
 
-                timeline.seek(10);
+                // timeline.seek(10);
                 break;
 
             case 1:
@@ -191,6 +190,7 @@ function Life() {
                          () => runAnimation()
                      }
                 >
+                    <FontAwesomeIcon icon={faPlay} />
                 </div>
             </div>
             <div className="LifeCalendarWrapper">
