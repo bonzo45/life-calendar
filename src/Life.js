@@ -18,9 +18,9 @@ const messageAnimation = (timeline, className) => {
 
 const messageAnimationRef = (timeline, ref, className) => {
     const [translationX, translationY] = translationToCenter(ref);
-    timeline.set(`.Message.${className}`, {scale: 0.5, filter: 'blur(5px)', x: translationX, y: translationY}, '+=0.5');
-    timeline.to(`.Message.${className}`, fadeIn(2, {scale: 2, filter: 'blur(0px)'}));
-    timeline.to(`.Message.${className}`, {x: 0, y: 0, scale: 1, duration: 1}, '+=1.5');
+    timeline.set(`.Message.${className}`, {scale: 0.5, filter: 'blur(2px)', x: translationX, y: translationY});
+    timeline.to(`.Message.${className}`, fadeIn(1, {scale: 2, filter: 'blur(0px)'}));
+    timeline.to(`.Message.${className}`, {x: 0, y: 0, scale: 1, duration: 1}, '+=1');
 };
 
 const steps = [
@@ -166,7 +166,7 @@ function Life() {
                 pulseTimeline.to('.Continue', {scale: 1 + pulseSize, duration: pulseDuration, ease: "sine.inOut"});
                 timeline.add(pulseTimeline);
 
-                // timeline.seek(10);
+                timeline.seek(10);
                 break;
 
             case 1:
@@ -182,6 +182,7 @@ function Life() {
                 timeline.from('.MonthHeading', {y: '-18px', duration: headingsDuration, stagger: headingsStagger}, 'headings');
                 timeline.to('.MonthHeading', fadeIn(headingsDuration, {stagger: headingsStagger}), 'headings');
 
+                timeline.seek(10);
                 break;
 
             default:
