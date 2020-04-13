@@ -129,8 +129,7 @@ function Life() {
 
                 const titleDuration = 2;
                 timeline.set('.LifeTitle', {scale: 0.5, filter: 'blur(5px)'}, 'start');
-                timeline.to('.LifeTitle', {scale: 1, filter: 'blur(0px)', duration: titleDuration}, 'start');
-                timeline.to('.LifeTitle', fadeIn(titleDuration), 'start');
+                timeline.to('.LifeTitle', fadeIn(titleDuration, {scale: 1, filter: 'blur(0px)'}), 'start');
 
                 const delay = 0.5;
                 const buttonDuration = 0.5;
