@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import { gsap } from 'gsap';
 import classNames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -115,6 +115,8 @@ function animateBetween(timeline, stepA, stepB) {
 function Life() {
     const [ state, setState ] = useState(0);
 
+    const titleRef = useRef();
+
     const prepareAnimation = () => {
         const timeline = gsap.timeline();
         timeline.to('.MonthHeading.BirthMonth, .Month.BirthMonth, .MonthHeading:not(.BirthMonth), .Month:not(.BirthMonth)', {opacity: 0, duration: 0});
@@ -127,16 +129,27 @@ function Life() {
             case 0:
                 timeline.addLabel('start');
 
-                const titleDuration = 2;
-                timeline.set('.LifeTitle', {scale: 0.5, filter: 'blur(5px)'}, 'start');
-                timeline.to('.LifeTitle', fadeIn(titleDuration, {scale: 1, filter: 'blur(0px)'}), 'start');
+                console.log(window.innerWidth);
+                console.log(window.innerHeight);
+                const fromX = window.innerWidth / 2;
+                const fromY = window.innerHeight / 2;
+                const rect = titleRef.current.getBoundingClientRect();
+                const currentX = rect.x + rect.width / 2;
+                const currentY = rect.y + rect.height / 2;
+                const translationX = fromX - currentX;
+                const translationY = fromY - currentY;
 
-                const delay = 0.5;
+                const titleDuration = 2;
+                timeline.set('.LifeTitle', {scale: 0.5, filter: 'blur(5px)', x: translationX, y: translationY}, 'start');
+                timeline.to('.LifeTitle', fadeIn(titleDuration, {scale: 1, filter: 'blur(0px)'}), 'start');
+                timeline.to('.LifeTitle', {x: 0, y: 0, duration: titleDuration});
+
                 const buttonDuration = 0.5;
                 const pulseSize = 0.025;
-                timeline.set('.Continue', {scale: 0}, titleDuration + delay);
-                timeline.to('.Continue', {scale: 1 + pulseSize, duration: buttonDuration}, titleDuration + delay);
-                timeline.to('.Continue', fadeIn(buttonDuration), titleDuration + delay);
+                timeline.addLabel('continue');
+                timeline.set('.Continue', {scale: 0}, 'continue');
+                timeline.to('.Continue', {scale: 1 + pulseSize, duration: buttonDuration}, 'continue');
+                timeline.to('.Continue', fadeIn(buttonDuration), 'continue');
 
                 const pulseTimeline = gsap.timeline({repeat: -1});
                 const pulseDuration = 1;
@@ -182,7 +195,7 @@ function Life() {
     return (
         <div className="Life">
             <div className="LifeTitleWrapper">
-                <h1 className="LifeTitle">
+                <h1 className="LifeTitle" ref={titleRef}>
                     Your Life
                 </h1>
                 <div className="Continue"
