@@ -7,6 +7,7 @@ import { faPlay } from '@fortawesome/free-solid-svg-icons'
 import './Life.css';
 
 const fadeIn = (duration, others) => ({autoAlpha: 1, duration, ...others});
+const fadeOut = (duration, others) => ({autoAlpha: 0, duration, ...others});
 
 const messageDuration = 0.5;
 
@@ -123,14 +124,12 @@ function Life() {
     };
 
     const runAnimation = () => {
-        const timeline = gsap.timeline();
+        const timeline = gsap.timeline({repeat: -1});
 
         switch (state) {
             case 0:
                 timeline.addLabel('start');
 
-                console.log(window.innerWidth);
-                console.log(window.innerHeight);
                 const fromX = window.innerWidth / 2;
                 const fromY = window.innerHeight / 2;
                 const rect = titleRef.current.getBoundingClientRect();
@@ -139,23 +138,24 @@ function Life() {
                 const translationX = fromX - currentX;
                 const translationY = fromY - currentY;
 
-                const titleDuration = 2;
-                timeline.set('.LifeTitle', {scale: 0.5, filter: 'blur(5px)', x: translationX, y: translationY}, 'start');
-                timeline.to('.LifeTitle', fadeIn(titleDuration, {scale: 1, filter: 'blur(0px)'}), 'start');
-                timeline.to('.LifeTitle', {x: 0, y: 0, duration: titleDuration});
+                timeline.set('.LifeTitle', {scale: 0.5, filter: 'blur(5px)', x: translationX, y: translationY});
+                timeline.to('.LifeTitle', fadeIn(2, {scale: 1.5, filter: 'blur(0px)'}));
+                timeline.to('.LifeTitle', fadeOut(1), "+=3");
+                timeline.set('.LifeTitle', {x: 0, y: 0, scale: 1 });
+                timeline.to('.LifeTitle', fadeIn(1));
 
-                const buttonDuration = 0.5;
-                const pulseSize = 0.025;
-                timeline.addLabel('continue');
-                timeline.set('.Continue', {scale: 0}, 'continue');
-                timeline.to('.Continue', {scale: 1 + pulseSize, duration: buttonDuration}, 'continue');
-                timeline.to('.Continue', fadeIn(buttonDuration), 'continue');
-
-                const pulseTimeline = gsap.timeline({repeat: -1});
-                const pulseDuration = 1;
-                pulseTimeline.to('.Continue', {scale: 1 - pulseSize, duration: pulseDuration, ease: "sine.inOut"});
-                pulseTimeline.to('.Continue', {scale: 1 + pulseSize, duration: pulseDuration, ease: "sine.inOut"});
-                timeline.add(pulseTimeline);
+                // const buttonDuration = 0.5;
+                // const pulseSize = 0.025;
+                // timeline.addLabel('continue');
+                // timeline.set('.Continue', {scale: 0}, 'continue');
+                // timeline.to('.Continue', {scale: 1 + pulseSize, duration: buttonDuration}, 'continue');
+                // timeline.to('.Continue', fadeIn(buttonDuration), 'continue');
+                //
+                // const pulseTimeline = gsap.timeline({repeat: -1});
+                // const pulseDuration = 1;
+                // pulseTimeline.to('.Continue', {scale: 1 - pulseSize, duration: pulseDuration, ease: "sine.inOut"});
+                // pulseTimeline.to('.Continue', {scale: 1 + pulseSize, duration: pulseDuration, ease: "sine.inOut"});
+                // timeline.add(pulseTimeline);
 
                 // timeline.seek(10);
                 break;
