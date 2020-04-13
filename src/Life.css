@@ -60,11 +60,16 @@
 
 .Messages {
     flex: 0 1 200px;
-    padding-top: 400px;
+    font-size: 18px;
+    text-align: right;
+    /* Hack to line up with month headings */
+    padding-top: 32px;
+    padding-right: 20px;
 }
 
 .Message {
     visibility: hidden;
+    margin-bottom: 2px;
 }
 
 .LifeCalendar {

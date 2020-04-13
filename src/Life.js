@@ -124,7 +124,8 @@ function Life() {
     };
 
     const runAnimation = () => {
-        const timeline = gsap.timeline({repeat: -1});
+        // const timeline = gsap.timeline({repeat: -1});
+        const timeline = gsap.timeline();
 
         switch (state) {
             case 0:
@@ -138,24 +139,22 @@ function Life() {
                 const translationX = fromX - currentX;
                 const translationY = fromY - currentY;
 
-                timeline.set('.LifeTitle', {scale: 0.5, filter: 'blur(5px)', x: translationX, y: translationY});
-                timeline.to('.LifeTitle', fadeIn(2, {scale: 1.5, filter: 'blur(0px)'}));
-                timeline.to('.LifeTitle', fadeOut(1), "+=3");
-                timeline.set('.LifeTitle', {x: 0, y: 0, scale: 1 });
-                timeline.to('.LifeTitle', fadeIn(1));
+                timeline.set('.LifeTitle', {scale: 0.5, filter: 'blur(5px)', x: translationX, y: translationY}, '+=0.5');
+                timeline.to('.LifeTitle', fadeIn(2, {scale: 2, filter: 'blur(0px)'}));
+                timeline.to('.LifeTitle', {x: 0, y: 0, scale: 1, duration: 1}, '+=1.5');
 
-                // const buttonDuration = 0.5;
-                // const pulseSize = 0.025;
-                // timeline.addLabel('continue');
-                // timeline.set('.Continue', {scale: 0}, 'continue');
-                // timeline.to('.Continue', {scale: 1 + pulseSize, duration: buttonDuration}, 'continue');
-                // timeline.to('.Continue', fadeIn(buttonDuration), 'continue');
-                //
-                // const pulseTimeline = gsap.timeline({repeat: -1});
-                // const pulseDuration = 1;
-                // pulseTimeline.to('.Continue', {scale: 1 - pulseSize, duration: pulseDuration, ease: "sine.inOut"});
-                // pulseTimeline.to('.Continue', {scale: 1 + pulseSize, duration: pulseDuration, ease: "sine.inOut"});
-                // timeline.add(pulseTimeline);
+                const buttonDuration = 0.5;
+                const pulseSize = 0.025;
+                timeline.addLabel('continue');
+                timeline.set('.Continue', {scale: 0}, 'continue');
+                timeline.to('.Continue', {scale: 1 + pulseSize, duration: buttonDuration}, 'continue');
+                timeline.to('.Continue', fadeIn(buttonDuration), 'continue');
+
+                const pulseTimeline = gsap.timeline({repeat: -1});
+                const pulseDuration = 1;
+                pulseTimeline.to('.Continue', {scale: 1 - pulseSize, duration: pulseDuration, ease: "sine.inOut"});
+                pulseTimeline.to('.Continue', {scale: 1 + pulseSize, duration: pulseDuration, ease: "sine.inOut"});
+                timeline.add(pulseTimeline);
 
                 // timeline.seek(10);
                 break;
@@ -209,9 +208,9 @@ function Life() {
             <div className="LifeCalendarWrapper">
                 <div className="Messages">
                     <div key='message-birth' className='Message BirthMonth'>You were born!</div>
-                    <div key='message-christmas' className='Message Christmas'>Your first Christmas 🎄</div>
+                    <div key='message-christmas' className='Message Christmas'>🎄 Your first Christmas!</div>
                     <div key='message-five' className='Message Five'>You are 5!</div>
-                    <div key='message-now' className='Message Now'>You are here!</div>
+                    <div key='message-now' className='Message Now'>Now!</div>
                     <div key='message-ninety' className='Message Ninety'>You are 90!</div>
                 </div>
                 <div className="LifeCalendar">
