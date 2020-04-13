@@ -128,15 +128,16 @@ function Life() {
                 timeline.addLabel('start');
 
                 const titleDuration = 2;
-                timeline.set('.LifeTitle', {scale: 0.5}, 'start');
-                timeline.to('.LifeTitle', {scale: 1, duration: titleDuration}, 'start');
+                timeline.set('.LifeTitle', {scale: 0.5, filter: 'blur(5px)'}, 'start');
+                timeline.to('.LifeTitle', {scale: 1, filter: 'blur(0px)', duration: titleDuration}, 'start');
                 timeline.to('.LifeTitle', fadeIn(titleDuration), 'start');
 
+                const delay = 0.5;
                 const buttonDuration = 0.5;
                 const pulseSize = 0.025;
-                timeline.set('.Continue', {scale: 0}, titleDuration);
-                timeline.to('.Continue', {scale: 1 + pulseSize, duration: buttonDuration}, titleDuration);
-                timeline.to('.Continue', fadeIn(buttonDuration), titleDuration);
+                timeline.set('.Continue', {scale: 0}, titleDuration + delay);
+                timeline.to('.Continue', {scale: 1 + pulseSize, duration: buttonDuration}, titleDuration + delay);
+                timeline.to('.Continue', fadeIn(buttonDuration), titleDuration + delay);
 
                 const pulseTimeline = gsap.timeline({repeat: -1});
                 const pulseDuration = 1;
