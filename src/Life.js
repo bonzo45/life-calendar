@@ -172,7 +172,7 @@ function Life() {
             case 1:
                 timeline.addLabel('calendar');
 
-                const calendarDuration = 1;
+                const calendarDuration = 1.5;
                 timeline.from('.LifeCalendar', {scale: 0.95, duration: calendarDuration}, 'calendar');
                 timeline.to('.LifeCalendar', fadeIn(calendarDuration), 'calendar');
 
@@ -182,7 +182,16 @@ function Life() {
                 timeline.from('.MonthHeading', {y: '-18px', duration: headingsDuration, stagger: headingsStagger}, 'headings');
                 timeline.to('.MonthHeading', fadeIn(headingsDuration, {stagger: headingsStagger}), 'headings');
 
-                timeline.seek(10);
+                timeline.to(
+                    getMonthSelectorBetween({year: 1, month: 0}, {year: 90, month: 12}),
+                    fadeIn(0.5, {stagger: {
+                        amount: 2,
+                        from: "center",
+                        grid: "auto",
+                    }})
+                );
+
+                // timeline.seek(10);
                 break;
 
             default:
