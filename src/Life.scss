@@ -35,7 +35,6 @@ h1 {
     visibility: hidden;
 
     cursor: pointer;
-    background-color: #5ca74e;
     box-sizing: border-box;
     border: inset 2px;
 
@@ -46,6 +45,12 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
+
+    background-color: #70a966;
+
+    &:hover {
+        background-color: #7baf72;
+    }
 }
 
 .Continue svg {
@@ -53,7 +58,6 @@ h1 {
 }
 
 .Continue:hover {
-    background-color: #70a966;
 }
 
 .LifeCalendarWrapper {
