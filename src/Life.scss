@@ -1,5 +1,20 @@
 $calendar-spacing: 2px;
 
+$background-color: #d3dacb;
+$calendar-color: #31352c;
+$neutral-month-color: #9aa297;
+
+.App {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    font-size: 18px;
+
+    background-color: $background-color;
+    color: black;
+}
+
 h1 {
     font-size: 250%;
 }
@@ -87,7 +102,7 @@ h1 {
 
     flex: 1 1 auto;
     border-radius: 5px;
-    background-color: #333531;
+    background-color: $calendar-color;
     color: white;
 
     display: flex;
@@ -130,7 +145,7 @@ h1 {
 .Month {
     position: relative;
     flex: 1 1 auto;
-    background-color: rgb(119, 126, 132);
+    background-color: $neutral-month-color;
 
     margin: 0 ($calendar-spacing / 2) 0 ($calendar-spacing / 2);
 
