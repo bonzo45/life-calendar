@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlay } from '@fortawesome/free-solid-svg-icons'
 
-import './Life.css';
+import './Life.scss';
 
 const fadeIn = (duration, others) => ({autoAlpha: 1, duration, ...others});
 const fadeOut = (duration, others) => ({autoAlpha: 0, duration, ...others});
