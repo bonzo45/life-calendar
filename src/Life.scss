@@ -114,8 +114,6 @@ h1 {
 
     display: flex;
     flex-direction: column;
-
-    overflow: hidden;
 }
 
 .MonthHeadings {
@@ -133,6 +131,8 @@ h1 {
 }
 
 .Year {
+    position: relative;
+
     flex: 1 1 auto;
 
     display: flex;
@@ -147,6 +147,14 @@ h1 {
     &:last-child {
         margin-bottom: 20px;
     }
+}
+
+.YearLabelText {
+    position: absolute;
+    top: 0;
+    right: calc(100% + 2px);
+    color: $page-font-color;
+    font-size: 40%
 }
 
 .Month {

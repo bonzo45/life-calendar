@@ -266,6 +266,7 @@ function Year({y, steps}) {
 
     return (
         <div className={yearClass}>
+            <div className="YearLabelText">{1993 + y - 1}</div>
             { months.map((month, m) => {
                 const monthNum = m + 1;
                 let monthClasses = `Month Year${y} Month${monthNum}`;
