@@ -180,8 +180,7 @@ function Life() {
                     getMonthSelectorBetween({year: 1, month: 0}, {year: 90, month: 12}),
                     fadeIn(1.5, {stagger: {
                             amount: 2,
-                            from: [0, 0],
-                            // axis: "x",
+                            from: "random",
                             grid: "auto",
                         }})
                 );
