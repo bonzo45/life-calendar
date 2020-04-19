@@ -176,20 +176,21 @@ function Life() {
                 timeline.from('.LifeCalendar', {scale: 0.95, duration: calendarDuration}, 'calendar');
                 timeline.to('.LifeCalendar', fadeIn(calendarDuration), 'calendar');
 
-                timeline.addLabel('year1');
-                const headingsDuration = 0.5;
-                const headingsStagger = 0.125;
-                timeline.from('.MonthHeading', {y: '-18px', duration: headingsDuration, stagger: headingsStagger}, 'headings');
-                timeline.to('.MonthHeading', fadeIn(headingsDuration, {stagger: headingsStagger}), 'headings');
-
                 timeline.to(
                     getMonthSelectorBetween({year: 1, month: 0}, {year: 90, month: 12}),
-                    fadeIn(0.5, {stagger: {
-                        amount: 2,
-                        from: "center",
-                        grid: "auto",
-                    }})
+                    fadeIn(1.5, {stagger: {
+                            amount: 2,
+                            from: [0, 0],
+                            // axis: "x",
+                            grid: "auto",
+                        }})
                 );
+
+                const headingsDuration = 0.75;
+                const headingsStagger = 0.125;
+                timeline.addLabel('headings');
+                timeline.from('.MonthHeading', {y: '-18px', duration: headingsDuration, stagger: headingsStagger}, 'headings');
+                timeline.to('.MonthHeading', fadeIn(headingsDuration, {stagger: headingsStagger}), 'headings');
 
                 // timeline.seek(10);
                 break;
