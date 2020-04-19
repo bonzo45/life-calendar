@@ -9,6 +9,10 @@ import './Life.scss';
 const fadeIn = (duration, others) => ({autoAlpha: 1, duration, ...others});
 const fadeOut = (duration, others) => ({autoAlpha: 0, duration, ...others});
 
+const neutralMonthColor = '#b5ae08';
+const pastMonthColor = '#e6b910';
+const eventMonthColor = '#71b37c';
+
 const messageDuration = 0.5;
 
 const messageAnimation = (timeline, className) => {
@@ -39,14 +43,14 @@ const steps = [
         }
     },
     {
-        year: 5,
+        year: 6,
         month: 1,
         animate: (timeline) => {
             messageAnimation(timeline, 'Five');
         }
     },
     {
-        year: 27,
+        year: 28,
         month: 3,
         animate: (timeline) => {
             messageAnimation(timeline, 'Now');
@@ -115,9 +119,18 @@ function animateBetween(timeline, stepA, stepB) {
     const duration = 0.5;
     const baseTime = 4;
     const stagger = baseTime / months;
+    console.log(targets);
 
-    timeline.from(targets, {x: '-40px', duration: duration, stagger: stagger}, 'between');
-    timeline.to(targets, fadeIn(duration, {stagger: stagger}), 'between');
+    timeline.to(targets.split(',').slice(0, -1), {
+        backgroundColor: pastMonthColor,
+        duration: duration,
+        stagger: stagger,
+    });
+    timeline.to(targets.split(',').slice(-1), {
+        backgroundColor: eventMonthColor,
+        duration: duration,
+        stagger: stagger,
+    });
 }
 
 function translationToCenter(elementRef) {

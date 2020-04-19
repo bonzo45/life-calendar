@@ -2,8 +2,9 @@ $calendar-spacing: 2px;
 
 $background-color: #d3dacb;
 $calendar-color: #31352c;
-$neutral-month-color: #9aa297;
-$event-month-color: rgb(113, 179, 124);
+$neutral-month-color: #b5ae08;
+$past-month-color: #e6b910;
+$event-month-color: #71b37c;
 
 $page-font-color: black;
 $calendar-font-color: white;
@@ -173,8 +174,4 @@ h1 {
     &:last-child {
         margin-right: $calendar-spacing;
     }
-}
-
-.Month.MonthWithMessage {
-    background-color: $event-month-color;
 }
