@@ -178,12 +178,25 @@ function Life() {
 
                 timeline.to(
                     getMonthSelectorBetween({year: 1, month: 0}, {year: 90, month: 12}),
-                    fadeIn(1.5, {stagger: {
+                    fadeIn(1, {stagger: {
                             amount: 2,
                             from: "random",
                             grid: "auto",
                         }})
                 );
+
+                const yearLabelDuration = 0.75;
+                const yearLabelStagger = {
+                    amount: 2,
+                    from: "random",
+                };
+                timeline.addLabel('yearheadings');
+                timeline.from('.YearLabelText', {
+                    x: '-18px', duration: yearLabelDuration, stagger: yearLabelStagger
+                }, 'headings');
+                timeline.to('.YearLabelText', fadeIn(
+                    yearLabelDuration, {stagger: yearLabelStagger}
+                ), 'headings');
 
                 const headingsDuration = 0.75;
                 const headingsStagger = 0.125;

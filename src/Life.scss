@@ -154,7 +154,9 @@ h1 {
     top: 0;
     right: calc(100% + 2px);
     color: $page-font-color;
-    font-size: 40%
+    font-size: 40%;
+
+    visibility: hidden;
 }
 
 .Month {
